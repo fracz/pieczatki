@@ -1,27 +1,13 @@
 services:
-  db:
-    image: mariadb:10.6.4-focal
-    command: '--default-authentication-plugin=mysql_native_password'
-    volumes:
-      - db_data:/var/lib/mysql
+  enform:
+    container_name: pieczatki
     restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=somewordpress
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress
-  wordpress:
-    image: wordpress:latest
-    ports:
-      - 8080:80
-    restart: unless-stopped
+    networks: [ default ]
+    build: .
     volumes:
-      - ./wp-content:/var/www/html/wp-content
-    environment:
-      - WORDPRESS_DB_HOST=db
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
-      - WORDPRESS_DB_NAME=wordpress
+      - ../:/var/www:z
 
-volumes:
-  db_data:
+networks:
+  default:
+    external:
+      name: webproxy

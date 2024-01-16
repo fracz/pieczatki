@@ -11,6 +11,13 @@ const CONTENT_PATH = __DIR__ . '/../content';
 
 $app = AppFactory::create();
 
+function return404(Response $response)
+{
+    $text = Markdown::defaultTransform(file_get_contents(CONTENT_PATH . "/pages/error_404.md"));
+    $response->getBody()->write($text);
+    return $response->withStatus(404);
+}
+
 $app->get('/', function (Request $request, Response $response, $args) {
     $text = Markdown::defaultTransform(file_get_contents(CONTENT_PATH . "/pages/home.md"));
     $response->getBody()->write($text);
@@ -26,9 +33,7 @@ $app->get('/pieczatki[/{woj}]', function (Request $request, Response $response, 
         $response->getBody()->write($text);
         return $response;
     } else {
-        $text = Markdown::defaultTransform(file_get_contents(CONTENT_PATH . "/pages/error_404.md"));
-        $response->getBody()->write($text);
-        return $response->withStatus(404);
+        return return404($response);
     }
 });
 
@@ -42,9 +47,7 @@ $app->get('/pieczatki/{woj}/{pow}', function (Request $request, Response $respon
         $response->getBody()->write($text);
         return $response;
     } else {
-        $text = Markdown::defaultTransform(file_get_contents(CONTENT_PATH . "/pages/error_404.md"));
-        $response->getBody()->write($text);
-        return $response->withStatus(404);
+        return return404($response);
     }
 });
 
@@ -57,9 +60,17 @@ $app->get('/pieczatki/{woj}/{pow}/{img}', function (Request $request, Response $
         $response->getBody()->write(file_get_contents($filepath));
         return $response->withHeader('Content-Type', 'image/jpg');
     } else {
-        $text = Markdown::defaultTransform(file_get_contents(CONTENT_PATH . "/pages/error_404.md"));
-        $response->getBody()->write($text);
-        return $response->withStatus(404);
+        return return404($response);
+    }
+});
+
+$app->get('/img/{image}', function (Request $request, Response $response, $args) {
+    $filepath = CONTENT_PATH . "/pages/img/" . basename($args['image']);
+    if (file_exists($filepath)) {
+        $response->getBody()->write(file_get_contents($filepath));
+        return $response->withHeader('Content-Type', 'image/jpg');
+    } else {
+        return return404($response);
     }
 });
 
@@ -70,11 +81,8 @@ $app->get('/{page}', function (Request $request, Response $response, $args) {
         $response->getBody()->write($text);
         return $response;
     } else {
-        $text = Markdown::defaultTransform(file_get_contents(CONTENT_PATH . "/pages/error_404.md"));
-        $response->getBody()->write($text);
-        return $response->withStatus(404);
+        return return404($response);
     }
 });
-
 
 $app->run();

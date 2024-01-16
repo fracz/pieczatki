@@ -11,3 +11,4 @@ itd... W zasadzie ilu turystów, tyle powodów, aby ruszyć się z domu. Prezent
 znanych każdemu miejsc turystycznych.
 
 [Pieczątki](/pieczatki)
+[Info](/info)

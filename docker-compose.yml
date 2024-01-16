@@ -5,7 +5,7 @@ services:
     networks: [ default ]
     build: .
     volumes:
-      - ../:/var/www:z
+      - ./:/var/www:z
 
 networks:
   default:

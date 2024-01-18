@@ -44,9 +44,11 @@
                        href="https://drive.google.com/drive/folders/1G_VkTyCw94uqJ7n3lJi3rakwO7cCrJ4L?usp=sharing">
                         <i class="fab fa-google-drive"></i>
                     </a>
-                    <!--                        <a class="text-primary px-3" href="">-->
-                    <!--                            <i class="fab fa-database"></i>-->
-                    <!--                        </a>-->
+                    <?php if ($_SESSION['loggedIn'] ?? false): ?>
+                        <a class="text-primary px-3" href="/logout">
+                            wyloguj
+                        </a>
+                    <?php endif; ?>
                     <!--                        <a class="text-primary px-3" href="">-->
                     <!--                            <i class="fab fa-linkedin-in"></i>-->
                     <!--                        </a>-->

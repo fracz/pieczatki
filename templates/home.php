@@ -53,40 +53,41 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
         <!--        </div>-->
         <div class="row">
             <?php
-            $root = __DIR__ . '/../content/pieczatki' . $subdirHash;
-            $list = scandir($root);
-            $directories = array_diff($list, ['.', '..']);
-            sort($directories);
+            $slugify = new Cocur\Slugify\Slugify();
+            $usort = fn($a, $b) => strcoll($slugify->slugify($a), $slugify->slugify($b));
+            $directories = array_keys($stamps);
+            usort($directories, $usort);
             foreach ($directories as $directory):
-                if (is_dir($root . '/' . $directory)):
-                    ?>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="destination-item position-relative overflow-hidden mb-2" style="min-height: 200px">
-                            <img class="img-fluid" src="/media<?= $subdirHash . '/' . $directory ?>/cover.svg" alt="">
-                            <a class="destination-overlay text-white text-decoration-none"
-                               href="/pieczatki<?= $subdirHash ?>/<?= $directory ?>">
-                                <h5 class="text-white"><?= $directory ?></h5>
-                                <span>
-                                    <?php
-                                    $count = $stamps[$directory]['count'] ?? 0;
-                                    if ($count) {
-                                        $r10 = $count % 10;
-                                        $r100 = $count % 100;
-                                        if ($count === 1) {
-                                            echo '1 pieczątka';
-                                        } else if ($r10 > 4 || $r10 < 2 || ($r100 < 15 && $r100 > 11)) {
-                                            echo $count . ' pieczątek';
-                                        } else {
-                                            echo $count . ' pieczątki';
-                                        }
+                if (in_array($directory, ['count', 'images'])) {
+                    continue;
+                }
+                ?>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2" style="min-height: 200px">
+                        <img class="img-fluid" src="/media<?= $subdirHash . '/' . $directory ?>/cover.svg" alt="">
+                        <a class="destination-overlay text-white text-decoration-none"
+                           href="/pieczatki<?= $subdirHash ?>/<?= $directory ?>">
+                            <h5 class="text-white"><?= $directory ?></h5>
+                            <span>
+                                <?php
+                                $count = $stamps[$directory]['count'] ?? 0;
+                                if ($count) {
+                                    $r10 = $count % 10;
+                                    $r100 = $count % 100;
+                                    if ($count === 1) {
+                                        echo '1 pieczątka';
+                                    } else if ($r10 > 4 || $r10 < 2 || ($r100 < 15 && $r100 > 11)) {
+                                        echo $count . ' pieczątek';
+                                    } else {
+                                        echo $count . ' pieczątki';
                                     }
-                                    ?>
-                                </span>
-                            </a>
-                        </div>
+                                }
+                                ?>
+                            </span>
+                        </a>
                     </div>
-                <?php
-                endif;
+                </div>
+            <?php
             endforeach;
             ?>
         </div>

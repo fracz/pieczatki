@@ -9,12 +9,19 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../get-stamps.php';
 
 const CONTENT_PATH = __DIR__ . '/../content';
+const DESCRIPTIONS_PATH = __DIR__ . '/../var/descriptions.php';
+
+$descriptions = require_once DESCRIPTIONS_PATH;
 
 if (preg_match('/(css|img|js|lib)/', $_SERVER["REQUEST_URI"])) {
     return false;
 }
 
+session_cache_limiter(false);
+session_start();
+
 $app = AppFactory::create();
+$app->addBodyParsingMiddleware();
 $phpView = new PhpRenderer(__DIR__ . "/../templates", ['title' => 'Polskie Pieczątki Turystyczne']);
 $phpView->setLayout('layout.php');
 
@@ -27,23 +34,40 @@ $app->get('/', function (Request $request, Response $response, $args) use ($phpV
     return $phpView->render($response, "home.php", ['stamps' => getStamps()]);
 });
 
-$app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $response, $args) use ($return404, $phpView) {
+$app->get('/login', function (Request $request, Response $response, $args) use ($phpView) {
+    return $phpView->render($response, "login.php");
+});
+
+$app->post('/login', function (Request $request, Response $response, $args) use ($phpView) {
+    $body = $request->getParsedBody();
+    if ((sha1('yuve' . ($body['password'] ?? ''))) === 'c93f1b18258b016e8a11f585556be57b86ef1e10') {
+        $_SESSION['loggedIn'] = true;
+        return $response->withStatus(301)->withHeader('Location', '/');
+    } else {
+        return $phpView->render($response, "login.php");
+    }
+});
+
+$app->get('/logout', function (Request $request, Response $response, $args) use ($phpView) {
+    session_destroy();
+    return $response->withStatus(301)->withHeader('Location', '/');
+});
+
+$app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $response, $args) use ($descriptions, $return404, $phpView) {
     $woj = $args['woj'] ?? '';
-    $filepath = CONTENT_PATH . "/pieczatki/$woj";
     $stamps = getStamps();
-    if (is_dir($filepath)) {
-        if ($woj) {
-            foreach (explode('/', $woj) as $part) {
-                $stamps = $stamps[$part];
+    if ($woj) {
+        foreach (explode('/', $woj) as $part) {
+            $stamps = $stamps[$part] ?? null;
+            if (!$stamps) {
+                return $return404($response);
             }
         }
-        if (isset($stamps['images'])) {
-            return $phpView->render($response, "gallery.php", ['subdir' => $woj, 'stamps' => $stamps]);
-        } else {
-            return $phpView->render($response, "home.php", ['subdir' => $woj, 'stamps' => $stamps]);
-        }
+    }
+    if ($stamps['images'] ?? null) {
+        return $phpView->render($response, "gallery.php", ['subdir' => $woj, 'stamps' => $stamps, 'descriptions' => $descriptions]);
     } else {
-        return $return404($response);
+        return $phpView->render($response, "home.php", ['subdir' => $woj, 'stamps' => $stamps]);
     }
 });
 
@@ -56,6 +80,19 @@ $app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $respons
 //        return return404($response);
 //    }
 //});
+
+$app->put('/update', function (Request $request, Response $response, $args) use ($return404, $phpView, &$descriptions) {
+    if ($_SESSION['loggedIn'] ?? false) {
+        $body = $request->getParsedBody();
+        $filename = $body['filename'];
+        unset($body['filename']);
+        $descriptions[$filename] = $body;
+        file_put_contents(DESCRIPTIONS_PATH, "<?php\nreturn " . var_export($descriptions, true) . ';', LOCK_EX);
+        return $response;
+    } else {
+        return $return404($response);
+    }
+});
 
 $app->get('/{page}', function (Request $request, Response $response, $args) use ($return404, $phpView) {
     $filepath = CONTENT_PATH . "/pages/$args[page].md";

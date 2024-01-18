@@ -60,12 +60,10 @@ $app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $respons
 //    }
 //});
 
-$app->get('/{page}', function (Request $request, Response $response, $args) {
+$app->get('/{page}', function (Request $request, Response $response, $args) use ($phpView) {
     $filepath = CONTENT_PATH . "/pages/$args[page].md";
     if (file_exists($filepath)) {
-        $text = Markdown::defaultTransform(file_get_contents($filepath));
-        $response->getBody()->write($text);
-        return $response;
+        return $phpView->render($response, "markdown.php", ['filepath' => $filepath]);
     } else {
         return return404($response);
     }

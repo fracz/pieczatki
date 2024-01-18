@@ -79,8 +79,8 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                 <div class="navbar-nav ml-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Kolekcja</a>
-                    <a href="about.html" class="nav-item nav-link">Info</a>
+                    <a href="/" class="nav-item nav-link active">Kolekcja</a>
+                    <a href="/info" class="nav-item nav-link">Info</a>
                     <a href="service.html" class="nav-item nav-link">Historia</a>
                     <a href="package.html" class="nav-item nav-link">Proces</a>
                     <a href="package.html" class="nav-item nav-link">Linki</a>

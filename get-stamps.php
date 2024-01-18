@@ -14,7 +14,7 @@ function getStamps()
     $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));
     $stamps = ['count' => 0];
     $descriptions = require_once __DIR__ . '/var/descriptions.php';
-    $descriptionsCount = count($descriptionsCount);
+    $descriptionsCount = count($descriptions);
 
     /** @var SplFileInfo $file */
     foreach ($rii as $file) {

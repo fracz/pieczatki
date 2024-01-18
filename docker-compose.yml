@@ -1,13 +1,15 @@
 services:
-  enform:
+  pieczatki:
     container_name: pieczatki
     restart: unless-stopped
-    networks: [ default ]
+    #    networks: [ default ]
+    ports:
+      - '80:80'
     build: .
     volumes:
       - ./:/var/www:z
 
-networks:
-  default:
-    external:
-      name: webproxy
+#networks:
+#  default:
+#    external:
+#      name: webproxy

@@ -1,6 +1,5 @@
 <?php
 
-use Michelf\Markdown;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -19,18 +18,16 @@ $app = AppFactory::create();
 $phpView = new PhpRenderer(__DIR__ . "/../templates", ['title' => 'Polskie Pieczątki Turystyczne']);
 $phpView->setLayout('layout.php');
 
-function return404(Response $response)
-{
-    $text = Markdown::defaultTransform(file_get_contents(CONTENT_PATH . "/pages/error_404.md"));
-    $response->getBody()->write($text);
-    return $response->withStatus(404);
-}
+$return404 = function (Response $response) use ($phpView) {
+    return $phpView->render($response, "markdown.php", ['filepath' => CONTENT_PATH . "/pages/error_404.md"])
+        ->withStatus(404);
+};
 
 $app->get('/', function (Request $request, Response $response, $args) use ($phpView) {
     return $phpView->render($response, "home.php", ['stamps' => getStamps()]);
 });
 
-$app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $response, $args) use ($phpView) {
+$app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $response, $args) use ($return404, $phpView) {
     $woj = $args['woj'] ?? '';
     $filepath = CONTENT_PATH . "/pieczatki/$woj";
     $stamps = getStamps();
@@ -46,7 +43,7 @@ $app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $respons
             return $phpView->render($response, "home.php", ['subdir' => $woj, 'stamps' => $stamps]);
         }
     } else {
-        return return404($response);
+        return $return404($response);
     }
 });
 
@@ -60,16 +57,16 @@ $app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $respons
 //    }
 //});
 
-$app->get('/{page}', function (Request $request, Response $response, $args) use ($phpView) {
+$app->get('/{page}', function (Request $request, Response $response, $args) use ($return404, $phpView) {
     $filepath = CONTENT_PATH . "/pages/$args[page].md";
     if (file_exists($filepath)) {
         return $phpView->render($response, "markdown.php", ['filepath' => $filepath]);
     } else {
-        return return404($response);
+        return $return404($response);
     }
 });
 
-$app->get('/{path:.+\.[pngjsv]{3}$}', function (Request $request, Response $response, $args) {
+$app->get('/{path:.+\.[pngjsv]{3}$}', function (Request $request, Response $response, $args) use ($return404) {
     $path = str_replace('..', '', $args['path']);
     $filepath = CONTENT_PATH . "/pieczatki/" . $path;
     if (file_exists($filepath)) {
@@ -78,7 +75,7 @@ $app->get('/{path:.+\.[pngjsv]{3}$}', function (Request $request, Response $resp
         $contentType = ['png' => 'image/png', 'jpg' => 'image/jpg'][strtolower(end($parts))] ?? 'image/svg+xml';
         return $response->withHeader('Content-Type', $contentType);
     } else {
-        return return404($response);
+        return $return404($response);
     }
 });
 

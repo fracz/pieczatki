@@ -31,9 +31,6 @@ function getStamps()
             $cat = $yaml;
         }
     }
-    file_put_contents($cacheFile, "<?php\nreturn " . var_export($stamps, true) . ';');
+    file_put_contents($cacheFile, "<?php\nreturn " . var_export($stamps, true) . ';', LOCK_EX);
     return $stamps;
 }
-
-
-getStamps();

@@ -5,6 +5,7 @@
         "slim/slim": "4.*",
         "slim/psr7": "^1.6",
       "michelf/php-markdown": "^2.0",
-      "slim/php-view": "^3.2"
+      "slim/php-view": "^3.2",
+      "symfony/yaml": "^5.4"
     }
 }

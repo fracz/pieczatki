@@ -6,7 +6,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Views\PhpRenderer;
 
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../get-stamps.php';
 
 const CONTENT_PATH = __DIR__ . '/../content';
 
@@ -26,17 +27,23 @@ function return404(Response $response)
 }
 
 $app->get('/', function (Request $request, Response $response, $args) use ($phpView) {
-    return $phpView->render($response, "home.php");
+    return $phpView->render($response, "home.php", ['stamps' => getStamps()]);
 });
 
 $app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $response, $args) use ($phpView) {
     $woj = $args['woj'] ?? '';
     $filepath = CONTENT_PATH . "/pieczatki/$woj";
+    $stamps = getStamps();
     if (is_dir($filepath)) {
-        if (file_exists($filepath . '/_list.yml')) {
-            return $phpView->render($response, "gallery.php", ['subdir' => $woj]);
+        if ($woj) {
+            foreach (explode('/', $woj) as $part) {
+                $stamps = $stamps[$part];
+            }
+        }
+        if (isset($stamps['images'])) {
+            return $phpView->render($response, "gallery.php", ['subdir' => $woj, 'stamps' => $stamps]);
         } else {
-            return $phpView->render($response, "home.php", ['subdir' => $woj]);
+            return $phpView->render($response, "home.php", ['subdir' => $woj, 'stamps' => $stamps]);
         }
     } else {
         return return404($response);

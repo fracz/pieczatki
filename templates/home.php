@@ -66,7 +66,22 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                             <a class="destination-overlay text-white text-decoration-none"
                                href="/pieczatki<?= $subdirHash ?>/<?= $directory ?>">
                                 <h5 class="text-white"><?= $directory ?></h5>
-                                <span>100 Cities</span>
+                                <span>
+                                    <?php
+                                    $count = $stamps[$directory]['count'] ?? 0;
+                                    if ($count) {
+                                        $r10 = $count % 10;
+                                        $r100 = $count % 100;
+                                        if ($count === 1) {
+                                            echo '1 pieczątka';
+                                        } else if ($r10 > 4 || $r10 < 2 || ($r100 < 15 && $r100 > 11)) {
+                                            echo $count . ' pieczątek';
+                                        } else {
+                                            echo $count . ' pieczątki';
+                                        }
+                                    }
+                                    ?>
+                                </span>
                             </a>
                         </div>
                     </div>

@@ -103,7 +103,7 @@ $app->get('/{page}', function (Request $request, Response $response, $args) use 
     }
 });
 
-$app->get('/media/{path:.+\.[pngjsv]{3}$}', function (Request $request, Response $response, $args) use ($return404) {
+$app->get('/media/{path:.+\.[pngjsvPNGJSV]{3}$}', function (Request $request, Response $response, $args) use ($return404) {
     $path = str_replace('..', '', $args['path']);
     $filepath = CONTENT_PATH . "/pieczatki/" . $path;
     if (file_exists($filepath)) {

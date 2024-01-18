@@ -43,7 +43,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
                         <img class="img-fluid" src="/media/<?= $fullFilename ?>" alt="">
-                        <?php $desc = $descriptions[$fullFilename];
+                        <?php $desc = $descriptions[$fullFilename] ?? [];
                         if ($_SESSION['loggedIn'] ?? false): ?>
                             <form class="p-4" onsubmit="return saveStamp(event)">
                                 <h6><?= $subdir . '/' . $filename ?></h6>
@@ -51,22 +51,22 @@
                                 <div class="form-group">
                                     <label>Lokalizacja</label>
                                     <input type="text" class="form-control" name="location"
-                                           value="<?= htmlentities($desc['location']) ?>">
+                                           value="<?= htmlentities($desc['location'] ?? '') ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Lata</label>
                                     <input type="text" class="form-control" name="years"
-                                           value="<?= htmlentities($desc['years']) ?>">
+                                           value="<?= htmlentities($desc['years'] ?? '') ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Wymiary</label>
                                     <input type="text" class="form-control" name="dimensions"
-                                           value="<?= htmlentities($desc['dimensions']) ?>">
+                                           value="<?= htmlentities($desc['dimensions'] ?? '') ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Opis</label>
                                     <textarea class="form-control"
-                                              name="description"><?= htmlspecialchars($desc['description']) ?></textarea>
+                                              name="description"><?= htmlspecialchars($desc['description'] ?? '') ?></textarea>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary btn-block" type="submit" name="submit">
@@ -77,23 +77,23 @@
                         <?php else: ?>
                             <div class="p-4">
                                 <div class="mb-3">
-                                    <?php if ($desc['location']): ?>
+                                    <?php if ($desc['location'] ?? ''): ?>
                                         <div>
                                             <i class="fa fa-map-marker-alt text-primary mr-2 fa-fw"></i> <?= $desc['location'] ?>
                                         </div>
                                     <?php endif; ?>
-                                    <?php if ($desc['years']): ?>
+                                    <?php if ($desc['years'] ?? ''): ?>
                                         <div>
                                             <i class="fa fa-calendar-alt text-primary mr-2 fa-fw"></i> <?= $desc['years'] ?>
                                         </div>
                                     <?php endif; ?>
-                                    <?php if ($desc['dimensions']): ?>
+                                    <?php if ($desc['dimensions'] ?? ''): ?>
                                         <div>
                                             <i class="fa fa-ruler text-primary mr-2 fa-fw"></i> <?= $desc['dimensions'] ?>
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                                <p class="h5" href=""><?= $desc['description'] ?></p>
+                                <p class="h5" href=""><?= $desc['description'] ?? '' ?></p>
                                 <!--                            <div class="border-top mt-4 pt-4">-->
                                 <!--                                <div class="d-flex justify-content-between">-->
                                 <!--                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>-->

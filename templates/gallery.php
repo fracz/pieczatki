@@ -40,7 +40,7 @@
             <?php foreach ($stamps['images'] as $filename => $details): ?>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="/<?= $subdir ?>/<?= $filename ?>" alt="">
+                        <img class="img-fluid" src="/media/<?= $subdir ?>/<?= $filename ?>" alt="">
                         <div class="p-4">
                             <div class="mb-3">
                                 <?php if ($details['location']): ?>

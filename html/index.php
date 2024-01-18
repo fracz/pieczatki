@@ -11,7 +11,7 @@ require_once __DIR__ . '/../get-stamps.php';
 const CONTENT_PATH = __DIR__ . '/../content';
 const DESCRIPTIONS_PATH = __DIR__ . '/../var/descriptions.php';
 
-$descriptions = require_once DESCRIPTIONS_PATH;
+$descriptions = require DESCRIPTIONS_PATH;
 
 if (preg_match('/(css|img|js|lib)/', $_SERVER["REQUEST_URI"])) {
     return false;

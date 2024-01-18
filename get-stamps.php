@@ -13,7 +13,7 @@ function getStamps()
     $root = __DIR__ . '/content/pieczatki';
     $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));
     $stamps = ['count' => 0];
-    $descriptions = require_once __DIR__ . '/var/descriptions.php';
+    $descriptions = require __DIR__ . '/var/descriptions.php';
     $descriptionsCount = count($descriptions);
 
     /** @var SplFileInfo $file */

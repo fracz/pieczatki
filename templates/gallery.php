@@ -3,7 +3,7 @@
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
             <h3 class="display-4 text-white text-uppercase">KOLEKCJA PIECZĄTEK</h3>
             <?php if ($subdir): ?>
-                <div class="d-inline-flex text-white">
+                <div class="d-inline-flex flex-wrap text-white">
                     <p class="m-0 text-uppercase"><a class="text-white" href="/">Kolekcja</a></p>
                     <?php
                     $dirs = explode('/', $subdir);

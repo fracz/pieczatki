@@ -71,16 +71,6 @@ $app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $respons
     }
 });
 
-//$app->get('/img/{image}', function (Request $request, Response $response, $args) {
-//    $filepath = CONTENT_PATH . "/pages/img/" . basename($args['image']);
-//    if (file_exists($filepath)) {
-//        $response->getBody()->write(file_get_contents($filepath));
-//        return $response->withHeader('Content-Type', 'image/jpg');
-//    } else {
-//        return return404($response);
-//    }
-//});
-
 $app->put('/update', function (Request $request, Response $response, $args) use ($return404, $phpView, &$descriptions) {
     if ($_SESSION['loggedIn'] ?? false) {
         $body = $request->getParsedBody();
@@ -108,9 +98,17 @@ $app->get('/media/{path:.+\.[jpsJPS][pnvPNV][gG]$}', function (Request $request,
     $filepath = CONTENT_PATH . "/pieczatki/" . $path;
     if (file_exists($filepath)) {
         $response->getBody()->write(file_get_contents($filepath));
-        $parts = explode('.', $path);
-        $contentType = ['png' => 'image/png', 'jpg' => 'image/jpg'][strtolower(end($parts))] ?? 'image/svg+xml';
-        return $response->withHeader('Content-Type', $contentType);
+        return $response->withHeader('Content-Type', mime_content_type($filepath));
+    } else {
+        return $return404($response);
+    }
+});
+
+$app->get('/static/{image}', function (Request $request, Response $response, $args) use ($return404) {
+    $filepath = CONTENT_PATH . "/pages/static/" . basename($args['image']);
+    if (file_exists($filepath)) {
+        $response->getBody()->write(file_get_contents($filepath));
+        return $response->withHeader('Content-Type', mime_content_type($filepath));
     } else {
         return $return404($response);
     }

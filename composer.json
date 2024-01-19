@@ -1,11 +1,12 @@
 {
-    "name": "yuve/pieczatki",
-    "type": "project",
-    "require": {
-        "slim/slim": "4.*",
-        "slim/psr7": "^1.6",
-      "michelf/php-markdown": "^2.0",
-      "slim/php-view": "^3.2",
-      "cocur/slugify": "^4.5"
-    }
+  "name": "yuve/pieczatki",
+  "type": "project",
+  "require": {
+    "ext-fileinfo": "*",
+    "slim/slim": "4.*",
+    "slim/psr7": "^1.6",
+    "michelf/php-markdown": "^2.0",
+    "slim/php-view": "^3.2",
+    "cocur/slugify": "^4.5"
+  }
 }

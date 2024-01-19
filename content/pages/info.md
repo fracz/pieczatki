@@ -27,4 +27,4 @@ pieczątek:
 > ktoś wstydzi się poprosić o pieczątkę np. do książeczki GOT lub notesu.
 
 
-![](img/Orlica1.webp)
+![](static/Orlica1.webp)

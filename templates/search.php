@@ -41,6 +41,11 @@
                 <h1>Wyniki wyszukiwania &mdash; "<?= htmlspecialchars($phrase) ?>"</h1>
             </div>
             <?php if ($hits): ?>
+                <?php if (count($hits) >= 100): ?>
+                    <div class="alert alert-warning text-center mb-4">
+                        Twoje zapytanie pasuje do bardzo wielu pieczątek. Wyniki pokazują tylko pierwsze 100.
+                    </div>
+                <?php endif; ?>
                 <div class="row">
                     <?php foreach ($hits as $filepath => $desc):
                         ?>

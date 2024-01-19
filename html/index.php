@@ -81,6 +81,9 @@ $app->get('/szukaj', function (Request $request, Response $response, $args) use 
         foreach ($descriptions as $filepath => $info) {
             if ($isHit(basename($filepath)) || array_filter($info, $isHit)) {
                 $hits[$filepath] = $info;
+                if (count($hits) >= 100) {
+                    break;
+                }
             }
         }
     }

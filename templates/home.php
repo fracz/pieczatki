@@ -28,9 +28,9 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
 <div class="container-fluid booking mt-5">
     <div class="container">
         <div class="bg-light shadow" style="padding: 30px;">
-            <div class="d-flex">
+            <form class="d-flex" method="get" action="/szukaj">
                 <div class="flex-grow-1 pr-3">
-                    <input type="text" class="form-control p-4" placeholder="Szukana fraza"/>
+                    <input type="text" class="form-control p-4" placeholder="Szukana fraza" name="q"/>
                 </div>
                 <div>
                     <button class="btn btn-primary btn-block" type="submit" style="height: 49px;">
@@ -38,7 +38,7 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                         <span class="d-none d-sm-inline">kolekcję</span>
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

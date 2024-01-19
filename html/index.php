@@ -71,6 +71,22 @@ $app->get('/pieczatki[/{woj:.+}]', function (Request $request, Response $respons
     }
 });
 
+$app->get('/szukaj', function (Request $request, Response $response, $args) use ($descriptions, $return404, $phpView) {
+    $params = $request->getQueryParams();
+    $hits = [];
+    $slugify = new Cocur\Slugify\Slugify();
+    $phrase = $slugify->slugify($params['q'] ?? '');
+    if ($phrase) {
+        $isHit = fn($str) => str_contains($slugify->slugify($str), $phrase);
+        foreach ($descriptions as $filepath => $info) {
+            if ($isHit(basename($filepath)) || array_filter($info, $isHit)) {
+                $hits[$filepath] = $info;
+            }
+        }
+    }
+    return $phpView->render($response, "search.php", ['phrase' => $params['q'] ?? '', 'hits' => $hits]);
+});
+
 $app->put('/update', function (Request $request, Response $response, $args) use ($return404, $phpView, &$descriptions) {
     if ($_SESSION['loggedIn'] ?? false) {
         $body = $request->getParsedBody();

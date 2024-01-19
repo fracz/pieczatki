@@ -40,7 +40,7 @@
             <?php foreach ($stamps['images'] as $filename):
                 $fullFilename = $subdir . '/' . $filename;
                 ?>
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-4 col-md-6 mb-4" id="<?= basename($fullFilename) ?>">
                     <div class="package-item bg-white mb-2">
                         <img class="img-fluid" src="/media/<?= $fullFilename ?>" alt="">
                         <?php $desc = $descriptions[$fullFilename] ?? [];
@@ -100,9 +100,10 @@
 
                                     <?php if ($desc['gccode'] ?? ''): ?>
                                         <div>
+                                            <i class="fa fa-box-open text-primary mr-2 fa-fw"></i>
                                             <a href="https://coord.info/<?= $desc['gccode'] ?>" target="_blank"
                                                class="text-monospace">
-                                                <i class="fa fa-box-open text-primary mr-2 fa-fw"></i> <?= $desc['gccode'] ?>
+                                                <?= $desc['gccode'] ?>
                                             </a>
                                         </div>
                                     <?php endif; ?>

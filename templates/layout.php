@@ -80,11 +80,20 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                 <div class="navbar-nav ml-auto py-0">
-                    <a href="/" class="nav-item nav-link active">Kolekcja</a>
-                    <a href="/info" class="nav-item nav-link">Info</a>
-                    <a href="service.html" class="nav-item nav-link">Historia</a>
-                    <a href="package.html" class="nav-item nav-link">Proces</a>
-                    <a href="package.html" class="nav-item nav-link">Linki</a>
+                    <?php
+                    $activeLink = [
+                        '/historia' => 'historia',
+                        '/info' => 'info',
+                        '/proces' => 'proces',
+                        '/linki' => 'linki',
+                    ][$_SERVER['REQUEST_URI']] ?? '';
+                    ?>
+                    <a href="/" class="nav-item nav-link <?= $activeLink === '' ? 'active' : '' ?>">Kolekcja</a>
+                    <a href="/info" class="nav-item nav-link <?= $activeLink === 'info' ? 'active' : '' ?>">Info</a>
+                    <a href="/historia" class="nav-item nav-link <?= $activeLink === 'historia' ? 'active' : '' ?>">Historia</a>
+                    <a href="/proces"
+                       class="nav-item nav-link <?= $activeLink === 'proces' ? 'active' : '' ?>">Proces</a>
+                    <a href="/linki" class="nav-item nav-link <?= $activeLink === 'linki' ? 'active' : '' ?>">Linki</a>
                     <!--                        <div class="nav-item dropdown">-->
                     <!--                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>-->
                     <!--                            <div class="dropdown-menu border-0 rounded-0 m-0">-->

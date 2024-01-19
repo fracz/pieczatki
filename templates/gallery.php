@@ -64,6 +64,11 @@
                                            value="<?= htmlentities($desc['dimensions'] ?? '') ?>">
                                 </div>
                                 <div class="form-group">
+                                    <label>Kod GC</label>
+                                    <input type="text" class="form-control" name="gccode"
+                                           value="<?= htmlentities($desc['gccode'] ?? '') ?>">
+                                </div>
+                                <div class="form-group">
                                     <label>Opis</label>
                                     <textarea class="form-control"
                                               name="description"><?= htmlspecialchars($desc['description'] ?? '') ?></textarea>
@@ -90,6 +95,15 @@
                                     <?php if ($desc['dimensions'] ?? ''): ?>
                                         <div>
                                             <i class="fa fa-ruler text-primary mr-2 fa-fw"></i> <?= $desc['dimensions'] ?>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if ($desc['gccode'] ?? ''): ?>
+                                        <div>
+                                            <a href="https://coord.info/<?= $desc['gccode'] ?>" target="_blank"
+                                               class="text-monospace">
+                                                <i class="fa fa-box-open text-primary mr-2 fa-fw"></i> <?= $desc['gccode'] ?>
+                                            </a>
                                         </div>
                                     <?php endif; ?>
                                 </div>
@@ -120,6 +134,7 @@
                 years: fields.years.value,
                 dimensions: fields.dimensions.value,
                 description: fields.description.value,
+                gccode: fields.gccode.value,
             };
             fields.submit.disabled = true;
             fetch('/update', {

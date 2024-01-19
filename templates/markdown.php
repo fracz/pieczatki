@@ -1,5 +1,5 @@
 <div class="container-fluid py-5">
-    <div class="container pb-3">
+    <div class="container pb-3 markdown-content">
         <?php
 
         use Michelf\Markdown;

@@ -13,7 +13,7 @@ const DESCRIPTIONS_PATH = __DIR__ . '/../var/descriptions.php';
 
 $descriptions = require DESCRIPTIONS_PATH;
 
-if (preg_match('/(css|img|js|lib)/', $_SERVER["REQUEST_URI"])) {
+if (preg_match('#^/(css|img|js|lib)/#', $_SERVER["REQUEST_URI"])) {
     return false;
 }
 
@@ -103,7 +103,7 @@ $app->get('/{page}', function (Request $request, Response $response, $args) use 
     }
 });
 
-$app->get('/media/{path:.+\.[pngjsvPNGJSV]{3}$}', function (Request $request, Response $response, $args) use ($return404) {
+$app->get('/media/{path:.+\.[jpsJPS][pnvPNV][gG]$}', function (Request $request, Response $response, $args) use ($return404) {
     $path = str_replace('..', '', $args['path']);
     $filepath = CONTENT_PATH . "/pieczatki/" . $path;
     if (file_exists($filepath)) {

@@ -185,8 +185,9 @@
      style="border-color: rgba(256, 256, 256, .1) !important;">
     <div class="row">
         <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-            <p class="m-0 text-white-50">Copyright &copy; <a href="#">pieczatkiturystyczne.pl</a>. All Rights
-                Reserved.</a>
+            <p class="m-0 text-white-50">
+                Copyright &copy; <a href="#">pieczatki-turystyczne.pl</a>.
+                All Rights Reserved.
             </p>
         </div>
         <div class="col-lg-6 text-center text-md-right">

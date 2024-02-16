@@ -1,7 +1,7 @@
 services:
   pieczatki:
     container_name: pieczatki
-    restart: unless-stopped
+    restart: always
     #    networks: [ default ]
     ports:
       - '80:80'

@@ -3,13 +3,13 @@ services:
     container_name: pieczatki
     restart: always
     #    networks: [ default ]
-    ports:
-      - '80:80'
+#    ports:
+#      - '80:80'
     build: .
     volumes:
       - ./:/var/www:z
 
-#networks:
-#  default:
-#    external:
-#      name: webproxy
+networks:
+  default:
+    external:
+      name: webproxy

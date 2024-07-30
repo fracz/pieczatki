@@ -5,11 +5,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Views\PhpRenderer;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../get-stamps.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/get-stamps.php';
 
-const CONTENT_PATH = __DIR__ . '/../content';
-const DESCRIPTIONS_PATH = __DIR__ . '/../var/descriptions.php';
+const CONTENT_PATH = __DIR__ . '/content';
+const DESCRIPTIONS_PATH = __DIR__ . '/var/descriptions.php';
 
 $descriptions = require DESCRIPTIONS_PATH;
 
@@ -22,7 +22,7 @@ session_start();
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
-$phpView = new PhpRenderer(__DIR__ . "/../templates", ['title' => 'Polskie Pieczątki Turystyczne']);
+$phpView = new PhpRenderer(__DIR__ . "/templates", ['title' => 'Polskie Pieczątki Turystyczne']);
 $phpView->setLayout('layout.php');
 
 $return404 = function (Response $response) use ($phpView) {

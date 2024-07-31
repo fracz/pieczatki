@@ -18,7 +18,7 @@ function getStamps()
 
     /** @var SplFileInfo $file */
     foreach ($rii as $file) {
-        if ($file->isDir() || in_array($file->getFilename(), ['cover.svg', '_list.yml'])) {
+        if ($file->isDir() || in_array($file->getFilename(), ['cover.svg', 'cover.png', '_list.yml'])) {
             continue;
         }
         $baseName = trim(str_replace($root, '', $file->getPathname()), '/');

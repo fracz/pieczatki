@@ -17,7 +17,7 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                 </div>
             <?php else: ?>
                 <div class="text-white">
-                    Zbieraj pieczątki tak jak yuve wchodzi na drzewa.
+                    turystycznych, historycznych, okolicznościowych i innych...
                 </div>
             <?php endif; ?>
         </div>

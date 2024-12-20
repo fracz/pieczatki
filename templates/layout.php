@@ -41,7 +41,7 @@
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-primary px-3"
-                       href="https://drive.google.com/drive/folders/1G_VkTyCw94uqJ7n3lJi3rakwO7cCrJ4L?usp=sharing">
+                       href="https://drive.google.com/drive/folders/10GTgkE8--PGlvnRFsTPTo3Yj751eE26n?usp=sharing">
                         <i class="fab fa-google-drive"></i>
                     </a>
                     <?php if ($_SESSION['loggedIn'] ?? false): ?>
@@ -72,8 +72,7 @@
         <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
             <a href="/" class="navbar-brand">
                 <h1 class="m-0 text-primary">
-                    <span class="text-dark">PIECZĄTKI</span>
-                    TURYSTYCZNE
+                    <span class="text-dark">PIECZĄTKI TURYSTYCZNE</span>
                 </h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -92,8 +91,7 @@
                     <a href="/" class="nav-item nav-link <?= $activeLink === '' ? 'active' : '' ?>">Kolekcja</a>
                     <a href="/info" class="nav-item nav-link <?= $activeLink === 'info' ? 'active' : '' ?>">Info</a>
                     <a href="/historia" class="nav-item nav-link <?= $activeLink === 'historia' ? 'active' : '' ?>">Historia</a>
-                    <a href="/proces"
-                       class="nav-item nav-link <?= $activeLink === 'proces' ? 'active' : '' ?>">Proces</a>
+                    <a href="/proces" class="nav-item nav-link <?= $activeLink === 'proces' ? 'active' : '' ?>">Proces</a>
                     <a href="/linki" class="nav-item nav-link <?= $activeLink === 'linki' ? 'active' : '' ?>">Linki</a>
                     <!--                        <div class="nav-item dropdown">-->
                     <!--                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>-->
@@ -120,79 +118,20 @@
 <?= $content ?>
 
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
-    <div class="row pt-5">
-        <!--            <div class="col-lg-3 col-md-6 mb-5">-->
-        <div class="col-lg-12">
-            <a href="" class="navbar-brand">
-                <h1 class="text-primary text-wrap">
-                    <span class="text-white">POLSKIE</span>
-                    PIECZĄTKI
-                    <span class="text-white">TURYSTYCZNE</span>
-                </h1>
-            </a>
-            <p>Sed ipsum clita tempor ipsum ipsum amet sit ipsum lorem amet labore rebum lorem ipsum dolor. No sed vero
-                lorem dolor dolor</p>
-            <!--                <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Follow Us</h6>-->
-            <!--                <div class="d-flex justify-content-start">-->
-            <!--                    <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>-->
-            <!--                    <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>-->
-            <!--                    <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>-->
-            <!--                    <a class="btn btn-outline-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>-->
-            <!--                </div>-->
-        </div>
-        <!--            <div class="col-lg-3 col-md-6 mb-5">-->
-        <!--                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Our Services</h5>-->
-        <!--                <div class="d-flex flex-column justify-content-start">-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Destination</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Services</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Packages</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Guides</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Testimonial</a>-->
-        <!--                    <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Blog</a>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--            <div class="col-lg-3 col-md-6 mb-5">-->
-        <!--                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Usefull Links</h5>-->
-        <!--                <div class="d-flex flex-column justify-content-start">-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Destination</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Services</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Packages</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Guides</a>-->
-        <!--                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Testimonial</a>-->
-        <!--                    <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Blog</a>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--            <div class="col-lg-3 col-md-6 mb-5">-->
-        <!--                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contact Us</h5>-->
-        <!--                <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>-->
-        <!--                <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>-->
-        <!--                <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>-->
-        <!--                <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Newsletter</h6>-->
-        <!--                <div class="w-100">-->
-        <!--                    <div class="input-group">-->
-        <!--                        <input type="text" class="form-control border-light" style="padding: 25px;" placeholder="Your Email">-->
-        <!--                        <div class="input-group-append">-->
-        <!--                            <button class="btn btn-primary px-3">Sign Up</button>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-    </div>
 </div>
 <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5"
      style="border-color: rgba(256, 256, 256, .1) !important;">
     <div class="row">
         <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-            <p class="m-0 text-white-50">
-                Copyright &copy; <a href="#">pieczatki-turystyczne.pl</a>.
-                All Rights Reserved.
+            <p class="text-white-50">
+                Copyright &copy;: <a href="#">pieczatki-turystyczne.pl</a>
             </p>
-        </div>
-        <div class="col-lg-6 text-center text-md-right">
-            <p class="m-0 text-white-50">Designed by <a href="https://htmlcodex.com">HTML Codex</a>
+            </p>
+            <p class="text-white-50">
+                All Rights Reserved: <span style="color: yellow">yuve (MO)</span>
+            </p>
+            <p class="text-white-50">
+                Created by: <span style="color: yellow">kranfagel (WF)</span>
             </p>
         </div>
     </div>

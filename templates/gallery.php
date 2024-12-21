@@ -87,16 +87,12 @@
                                             <i class="fa fa-map-marker-alt text-primary mr-2 fa-fw"></i> <?= $desc['location'] ?>
                                         </div>
                                     <?php endif; ?>
-                                    <?php if ($desc['years'] ?? ''): ?>
-                                        <div>
-                                            <i class="fa fa-calendar-alt text-primary mr-2 fa-fw"></i> <?= $desc['years'] ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if ($desc['dimensions'] ?? ''): ?>
-                                        <div>
-                                            <i class="fa fa-ruler text-primary mr-2 fa-fw"></i> <?= $desc['dimensions'] ?>
-                                        </div>
-                                    <?php endif; ?>
+                                    <div>
+                                        <i class="fa fa-calendar-alt text-primary mr-2 fa-fw"></i> <?= ($desc['year'] ?? null) ?: '-' ?>
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-ruler text-primary mr-2 fa-fw"></i> <?= ($desc['dimensions'] ?? null) ?: '-' ?>
+                                    </div>
 
                                     <?php if ($desc['gccode'] ?? ''): ?>
                                         <div>

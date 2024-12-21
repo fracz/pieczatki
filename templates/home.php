@@ -19,6 +19,9 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                 <div class="text-white">
                     turystycznych, historycznych, okolicznościowych i innych...
                 </div>
+                <div class="text-white">
+                    Liczba pieczątek w kolekcji: <?= $stamps['count'] ?>
+                </div>
             <?php endif; ?>
         </div>
     </div>

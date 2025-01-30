@@ -7,8 +7,8 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
 
 <div class="container-fluid page-header">
     <div class="container">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-            <h3 class="display-4 text-white text-uppercase">KOLEKCJA PIECZĄTEK</h3>
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 370px">
+            <h3 class="display-5 text-white text-uppercase">KOLEKCJA PIECZĄTEK</h3>
             <?php if ($subdir): ?>
                 <div class="d-inline-flex text-white">
                     <p class="m-0 text-uppercase"><a class="text-white" href="/">Kolekcja</a></p>
@@ -16,11 +16,12 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                     <p class="m-0 text-uppercase"><?= $subdir ?></p>
                 </div>
             <?php else: ?>
-                <div class="text-white">
-                    turystycznych, historycznych, okolicznościowych i innych...
+                <div class="text-white"><center>
+                turystycznych, historycznych, okolicznościowych i innych...<c/enter>
                 </div>
-                <div class="text-white">
-                    Liczba pieczątek w kolekcji: <?= $stamps['count'] ?>
+                </p>
+                <div class="text-white"><center>
+                Liczba pieczątek w kolekcji: <h4><span style="color:yellow"><?= $stamps['count'] ?></h4></center>
                 </div>
             <?php endif; ?>
         </div>
@@ -36,7 +37,7 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                     <input type="text" class="form-control p-4" placeholder="Szukana fraza" name="q"/>
                 </div>
                 <div>
-                    <button class="btn btn-primary btn-block" type="submit" style="height: 49px;">
+                    <button class="btn btn-primary btn-block" type="submit" style="height: 50px;">
                         Przeszukaj
                         <span class="d-none d-sm-inline">kolekcję</span>
                     </button>

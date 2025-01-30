@@ -33,17 +33,10 @@
         <div class="row">
             <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center">
-                    <p><i class="fa fa-envelope mr-2"></i>pieczatki.tur@gmail.com</p>
-                    <!--                        <p class="text-body px-3">|</p>-->
-                    <!--                        <p><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</p>-->
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <a class="text-primary px-3"
-                       href="https://drive.google.com/drive/folders/10GTgkE8--PGlvnRFsTPTo3Yj751eE26n?usp=sharing">
-                        <i class="fab fa-google-drive"></i>
-                    </a>
                     <?php if ($_SESSION['loggedIn'] ?? false): ?>
                         <a class="text-primary px-3" href="/logout">
                             wyloguj
@@ -124,14 +117,13 @@
     <div class="row">
         <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
             <p class="text-white-50">
-                Copyright &copy;: <a href="#">pieczatki-turystyczne.pl</a>
-            </p>
-            </p>
-            <p class="text-white-50">
-                All Rights Reserved: <span style="color: yellow">yuve (MO)</span>
+                contact: <span style="color: lightgreen">pieczatki.tur@gmail.com</span>
             </p>
             <p class="text-white-50">
-                Created by: <span style="color: yellow">kranfagel (WF)</span>
+                owner: <span style="color: yellow">yuve (MO)</span>
+            </p>
+            <p class="text-white-50">
+                webmaster: <span style="color: yellow">kranfagel (WF)</span>
             </p>
         </div>
     </div>

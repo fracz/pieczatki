@@ -1,5 +1,11 @@
 # <p><span style="color:green">LINKI</span></p>
 
+>## <p><span style="color:brown">Do pobrania</span></p>
+
+<p><div style="text-align: justify">Poniżej link do dysku google, skąd można pobrać prawie wszystkie przedstawione tu pieczątki:
+
+[![link0](/static/link0.jpg "link0")](https://drive.google.com/drive/folders/10GTgkE8--PGlvnRFsTPTo3Yj751eE26n?usp=sharing)
+
 >## <p><span style="color:brown">Wydobyte z sieci</span></p>
 
 <p><div style="text-align: justify">Oczywiste jest, że tylko nieliczne ze stempli turystycznych, przedstawionych w tym archiwum zdobyłem osobiście. Niektóre pieczątki pochodzą z czasów, kiedy nawet moich dziadków nie było jeszcze na świecie. Ale podstawy obsługi Photoshopa pomagają przywrócić zatarte piękno starych odbitek. Ponadto do wielu miejsc z pewnością nigdy nie uda mi się dotrzeć osobiście. Na szczęście nie jestem jedynym w Polsce maniakiem turystyki i "reksiowania", a w XXI w. media społecznościowe pomagają w udostępnianiu swoich kolekcji.

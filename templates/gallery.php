@@ -20,8 +20,6 @@
                     <i class="fa fa-angle-double-right pt-1 px-3"></i>
                     <p class="m-0 text-uppercase"><?= $last ?></p>
                 </div>
-            <?php else: ?>
-                </div>
             <?php endif; ?>
         </div>
     </div>
@@ -86,7 +84,7 @@
                                         </div>
                                     <?php endif; ?>
                                     <div>
-                                        <i class="fa fa-calendar-alt text-primary mr-2 fa-fw"></i> <?= ($desc['year'] ?? null) ?: '-' ?>
+                                        <i class="fa fa-calendar-alt text-primary mr-2 fa-fw"></i> <?= ($desc['years'] ?? null) ?: '-' ?>
                                     </div>
                                     <div>
                                         <i class="fa fa-ruler text-primary mr-2 fa-fw"></i> <?= ($desc['dimensions'] ?? null) ?: '-' ?>
@@ -103,13 +101,6 @@
                                     <?php endif; ?>
                                 </div>
                                 <p class="h5" href=""><?= $desc['description'] ?? '' ?></p>
-                                <!--                            <div class="border-top mt-4 pt-4">-->
-                                <!--                                <div class="d-flex justify-content-between">-->
-                                <!--                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small>-->
-                                <!--                                    </h6>-->
-                                <!--                                    <h5 class="m-0">$350</h5>-->
-                                <!--                                </div>-->
-                                <!--                            </div>-->
                             </div>
                         <?php endif; ?>
                     </div>

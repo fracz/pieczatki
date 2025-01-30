@@ -16,12 +16,12 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                     <p class="m-0 text-uppercase"><?= $subdir ?></p>
                 </div>
             <?php else: ?>
-                <div class="text-white"><center>
-                turystycznych, historycznych, okolicznościowych i innych...<c/enter>
+                <div class="text-white text-center">
+                    turystycznych, historycznych, okolicznościowych i innych...
                 </div>
-                </p>
-                <div class="text-white"><center>
-                Liczba pieczątek w kolekcji: <h4><span style="color:yellow"><?= $stamps['count'] ?></h4></center>
+                <div class="text-white">
+                    Liczba pieczątek w kolekcji:
+                    <h4 style="color:yellow"><?= $stamps['count'] ?></h4>
                 </div>
             <?php endif; ?>
         </div>
@@ -51,10 +51,6 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
 <!-- Destination Start -->
 <div class="container-fluid py-5">
     <div class="container pt-5 pb-3">
-        <!--        <div class="text-center mb-3 pb-3">-->
-        <!--            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Destination</h6>-->
-        <!--            <h1>Explore Top Destination</h1>-->
-        <!--        </div>-->
         <div class="row">
             <?php
             $slugify = new Cocur\Slugify\Slugify();

@@ -4,7 +4,7 @@
 
 <p><div style="text-align: justify">Poniżej link do dysku google, skąd można pobrać prawie wszystkie przedstawione tu pieczątki:
 
-[![link0](/static/link0.jpg "link0")](https://drive.google.com/drive/folders/10GTgkE8--PGlvnRFsTPTo3Yj751eE26n?usp=sharing)
+[![link0](/static/link0.jpg "link0")](https://drive.google.com/drive/folders/1cqLZ3uAZNutsgN_l94Ts-YROSztjPq4j?usp=sharing)
 
 >## <p><span style="color:brown">Wydobyte z sieci</span></p>
 
@@ -12,6 +12,10 @@
 
 Składam w tym miejscu gorące podziękowania za publiczne udostępnianie swoich zbiorów moim przyjaciołom z Polski i zagranicy. Poniżej zamieszczam linki do najważniejszych stron www w tej tematyce:​
 
+
+[![link10](/static/link10.jpg "link10")](https://www.facebook.com/groups/pieczatki)
+
+[![link11](/static/link11.jpg "link11")](https://www.facebook.com/stempleturystyczne)
 
 [![link1](/static/link1.jpg "link1")](http://stempleturystyczne.cba.pl/index.php)
 
@@ -30,6 +34,7 @@ Składam w tym miejscu gorące podziękowania za publiczne udostępnianie swoich
 [![link8](/static/link8.jpg "link8")](http://www.razitkuj.cz)
 
 [![link9](/static/link9.jpg "link9")](http://www.turistickarazitka.cz/mapa)
+
 
 
 >## <p><span style="color:brown">Księga Gości</span></p>

@@ -40,21 +40,21 @@ W wieku XX w Europie nastąpił przełom w produkcji pieczątek, pod koniec lat 
 >## <p><span style="color:brown">Pieczątkowe rekordy i ciekawostki</span></p>
 
 **Największe** znane mi pieczątki turystyczne, to:</p>
-<p>- Katowice, Śląskie Centrum Wolności i Solidarności (śląskie), wymiary <strong>100 x 180</strong> mm:</p>
-![Katowice](https://pieczatki-turystyczne.pl/media/%C5%9Bl%C4%85skie/Katowice/Katowice,%20SCWiS%201%20(100x180).jpg "Katowice")
+<p>- Katowice, Śląskie Centrum Wolności i Solidarności (śląskie), wymiary <strong>180 x 250</strong> mm:</p>
+![Katowice](https://pieczatki-turystyczne.pl/media/%C5%9Bl%C4%85skie/Katowice/Katowice,%20SCWiS%201%20(180x250).jpg "Katowice")
 
 <p>- Chełm, Informacja Turystyczna (lubelskie), wymiary <strong>76 x 146</strong> mm:</p>
 ![Chełm](https://pieczatki-turystyczne.pl/media/lubelskie/Che%C5%82m/Che%C5%82m,%20IT%202015%20(76x146).jpg "Chełm, IT")
 
 <p>- Gniew, zamek (pomorskie), wymiary: <strong>80 x 150</strong> mm:</p>
-![Gniew](https://pieczatki-turystyczne.pl/media/pomorskie/tczewski/Gniew,%20zamek%20(80x150).jpg "Gniew, zamek")
+![Gniew](https://pieczatki-turystyczne.pl/media/pomorskie/tczewski/Gniew,%20zamek%202018,%202021%20(80x150).jpg "Gniew, zamek")
 
 <p>- Nowy Dwór Gdański, PTMKŻ (pomorskie), wymiary <strong>120 x 130</strong> mm:</p>
 ![NDGdanski](https://pieczatki-turystyczne.pl/media/pomorskie/nowodworski/Nowy%20Dw%C3%B3r%20Gda%C5%84ski,%20PTMK%C5%BB%20(120x130).jpg "Nowy Dwór Gdański")</p>
 
 **Najmniejsze** pieczątki, jakie widziałem to:</p>
 <p>- Wrocław, Informacja Turystyczna (dolnośląskie), wymiary <strong>13 x 13</strong> mm:</p>
-![Wrocław](https://pieczatki-turystyczne.pl/media/dolno%C5%9Bl%C4%85skie/Wroc%C5%82aw/Wroc%C5%82aw,%20IT%208%202015,%202016%20(13x13).jpg "Wrocław, IT")
+![Wrocław](https://pieczatki-turystyczne.pl/media/dolno%C5%9Bl%C4%85skie/Wroc%C5%82aw/Wroc%C5%82aw,%20IT%202015,%202016%20(13x13).jpg "Wrocław, IT")
 
 <p>- Kraków, ZOO (małopolskie), wymiary <strong>15 x 20</strong> mm:</p>
 ![Kraków](https://pieczatki-turystyczne.pl/media/ma%C5%82opolskie/Krak%C3%B3w/Krak%C3%B3w,%20ZOO%202015,%202020%20(15x19).jpg "Kraków, ZOO")

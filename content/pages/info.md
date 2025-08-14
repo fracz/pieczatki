@@ -15,11 +15,11 @@ górska, muzealna, kulturalna, krajoznawcza, sportowa, questowa, ekstremalna, ge
 <p>- roku jej odbicia</p>
 <p>- wymiarach odcisku (mm x mm)</p>
 
-<p>W miarę moich skromnych możliwości finansowych chętnie odkupię stare książeczki GOT lub PTTK (także notesy i pamiętniki turystyczne) ze stemplami turystycznymi; ewentualnie wypożyczę je do zeskanowania (pokryję koszty przesyłki w obie strony).</p>
+<p>Chętnie wypożyczę do zeskanowania stare książeczki GOT lub PTTK (także notesy i pamiętniki turystyczne) ze stemplami turystycznymi. Oczywiście pokryję koszty przesyłki w obie strony</p>
 
-<p>Wszystkie pieczątki z tego archiwum są dostępne do pobrania z dysku Google (znaczek na górze po prawej).
-Udostępnione zdjęcia możecie zbierać, katalogować i robić inne dowolne rzeczy. Z jednym wyjątkiem: nie wolno wykorzystywać wydruków pieczęci poprzez wklejanie ich do książeczek turystycznych, aby w ten sposób uzyskać "zaliczenie" do odznaki, kwalifikacji, lub jakiejkolwiek innej gratyfikacji w organizacjach typu PTTK, Korona Gór Polski, itp. - to oszustwo!</p>
-<p>Poza tym zebrane tu zdjęcia i tak mają inne wymiary niż oryginalne odciski pieczęci, więc każdy weryfikator się pozna i wykryje taką "lewiznę". Szkoda narażać się na wstyd.</p>
+<p>Wszystkie pieczątki z tego archiwum są dostępne do pobrania z dysku Google (w sekcji LINKI).
+Udostępnione zdjęcia możecie sobie pobierać, katalogować i robić inne dowolne rzeczy. Z jednym wyjątkiem: nie wolno wykorzystywać wydruków pieczęci poprzez wklejanie ich do książeczek turystycznych, aby w ten sposób uzyskać "zaliczenie" do odznaki, kwalifikacji, lub jakiejkolwiek innej gratyfikacji w organizacjach typu PTTK, Korona Gór Polski, itp. - to oszustwo!</p>
+<p>Poza tym zebrane tu zdjęcia i tak mają zmienione wymiary względem oryginalnych odcisków pieczęci, więc każdy weryfikator się pozna i wykryje taką "lewiznę". Szkoda narażać się na wstyd.</p>
 
 >## <p><span style="color:brown">Dlaczego i po co?</span></p>
 
@@ -95,6 +95,10 @@ Udostępnione zdjęcia możecie zbierać, katalogować i robić inne dowolne rze
 <p>- schronisko "Orlica", Zieleniec, woj. dolnośląskie:</p>
 </p>
 ![Orlica](/static/Orlica.jpg "Orlica")</p>
+
+<p>- schronisko "Pod Wysoką Połoniną", Wetlina, woj. podkarpackie:</p>
+</p>
+![Wysoka Połonina](/static/Połonina.jpg "Wysoka Połonina")</p>
 
 <p>- wieża widokowa, Kornowac, woj. śląskie:</p>
 </p>

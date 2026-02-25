@@ -19,6 +19,11 @@ session_start();
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
+
+$errorMiddleware = $app->addErrorMiddleware($_SESSION['loggedIn'] ?? false, true, true);
+$errorHandler = $errorMiddleware->getDefaultErrorHandler();
+//$errorHandler->forceContentType('text/html');
+
 $phpView = new PhpRenderer(__DIR__ . "/templates", ['title' => 'Polskie Pieczątki Turystyczne']);
 $phpView->setLayout('layout.php');
 

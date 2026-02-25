@@ -100,6 +100,10 @@ Udostępnione zdjęcia możecie sobie pobierać, katalogować i robić inne dowo
 </p>
 ![Wysoka Połonina](/static/Połonina.jpg "Wysoka Połonina")</p>
 
+<p>- wieża widokowa "Radziejowa", Beskid Sądecki, woj. małopolskie:</p>
+</p>
+![Radziejowa](/static/Radziejowa.jpg "Radziejowa")</p>
+
 <p>- wieża widokowa, Kornowac, woj. śląskie:</p>
 </p>
 ![Kornowac](/static/Kornowac.jpg "Kornowac")</p>

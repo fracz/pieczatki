@@ -107,6 +107,9 @@
                                     <button type="button" class="btn btn-success btn-sm btn-block mb-2"
                                             onclick="saveSingle(<?= $image['id'] ?>, this)">Zapisz
                                     </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-block mb-2"
+                                            onclick="deleteSingle(<?= $image['id'] ?>, this)">Usuń
+                                    </button>
                                     <div class="status-indicator" id="status-<?= $image['id'] ?>"></div>
                                 </td>
                             </tr>
@@ -161,6 +164,37 @@
                 indicator.innerHTML = '<span class="text-danger small">Błąd sieci!</span>';
             })
             .finally(() => {
+                btn.disabled = false;
+            });
+    }
+
+    function deleteSingle(id, btn) {
+        if (!confirm('Czy na pewno chcesz usunąć tę pieczątkę? Plik graficzny również zostanie usunięty.')) {
+            return;
+        }
+
+        btn.disabled = true;
+        const row = btn.closest('tr');
+        const indicator = document.getElementById('status-' + id);
+        indicator.innerHTML = '<span class="text-muted small">Usuwanie...</span>';
+
+        fetch('/admin/image/' + id, {
+            method: 'DELETE'
+        })
+            .then(r => {
+                if (r.ok) {
+                    row.style.transition = 'opacity 0.5s';
+                    row.style.opacity = '0';
+                    setTimeout(() => {
+                        row.remove();
+                    }, 500);
+                } else {
+                    indicator.innerHTML = '<span class="text-danger small">Błąd!</span>';
+                    btn.disabled = false;
+                }
+            })
+            .catch(() => {
+                indicator.innerHTML = '<span class="text-danger small">Błąd sieci!</span>';
                 btn.disabled = false;
             });
     }

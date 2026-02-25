@@ -133,6 +133,27 @@ $app->put('/update', function (Request $request, Response $response, $args) use 
     }
 });
 
+$app->delete('/admin/image/{id}', function (Request $request, Response $response, $args) use ($pdo) {
+    if (!($_SESSION['loggedIn'] ?? false)) {
+        return $response->withStatus(403);
+    }
+    $id = $args['id'];
+    $stmt = $pdo->prepare("SELECT real_path FROM image WHERE id = ?");
+    $stmt->execute([$id]);
+    $image = $stmt->fetch();
+
+    if ($image) {
+        $pdo->prepare("DELETE FROM image WHERE id = ?")->execute([$id]);
+        $filepath = CONTENT_PATH . '/pieczatki/' . $image['real_path'];
+        if (file_exists($filepath)) {
+            unlink($filepath);
+        }
+        return $response->withStatus(204);
+    }
+
+    return $response->withStatus(404);
+});
+
 $app->get('/admin', function (Request $request, Response $response, $args) use ($pdo, $phpView) {
     if (!($_SESSION['loggedIn'] ?? false)) {
         return $response->withStatus(302)->withHeader('Location', '/login');

@@ -257,8 +257,10 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
         if ($parentId === 1) continue; // Image must be in a category
 
         $ext = strtolower($file->getExtension());
-        $insImage->execute([$parentId, $file->getFilename(), $relPath, $ext]);
-        $imported++;
+        $result = $insImage->execute([$parentId, $file->getFilename(), $relPath, $ext]);
+        if ($result->rowCount() > 0) {
+            $imported++;
+        }
     }
     $pdo->commit();
 

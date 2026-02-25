@@ -257,8 +257,8 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
         if ($parentId === 1) continue; // Image must be in a category
 
         $ext = strtolower($file->getExtension());
-        $result = $insImage->execute([$parentId, $file->getFilename(), $relPath, $ext]);
-        if ($result->rowCount() > 0) {
+        $insImage->execute([$parentId, $file->getFilename(), $relPath, $ext]);
+        if ($insImage->rowCount() > 0) {
             $imported++;
         }
     }

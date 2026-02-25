@@ -26,10 +26,10 @@
                             $path = [];
                             $current = $categoryMap[$categoryId] ?? null;
                             while ($current) {
-                                array_unshift($path, $current['name']);
+                                array_unshift($path, $current['label']);
                                 $current = $current['parent_id'] ? ($categoryMap[$current['parent_id']] ?? null) : null;
                             }
-                            return str_replace('root / ', '', implode(' / ', $path));
+                            return str_replace('Kolekcja / ', '', implode(' / ', $path));
                         }
 
                         // Sort categories by full path

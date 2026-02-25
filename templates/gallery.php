@@ -10,11 +10,14 @@
                     $last = array_pop($dirs);
                     $currentPath = '';
                     foreach ($dirs as $dir):
-                        $currentPath .= ($currentPath ? '/' : '') . $dir;
+                        $currentPath .= ($currentPath ? '/' : '') . $dir; // This is problematic if $subdir contains labels but needs slugs for URLs
+                        // Wait, $subdir in index.php is:
+                        // $pathNames[] = $category['label'];
+                        // $subdir = implode('/', $pathNames)
                         ?>
                         <i class="fa fa-angle-double-right pt-1 px-3"></i>
                         <p class="m-0 text-uppercase">
-                            <a class="text-white" href="/pieczatki/<?= $currentPath ?>"><?= $dir ?></a>
+                            <span class="text-white"><?= $dir ?></span>
                         </p>
                     <?php endforeach; ?>
                     <i class="fa fa-angle-double-right pt-1 px-3"></i>

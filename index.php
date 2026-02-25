@@ -70,7 +70,7 @@ $app->get('/pieczatki[/{path:.+}]', function (Request $request, Response $respon
             return $return404($response);
         }
         $currentParentId = $category['id'];
-        $pathNames[] = $category['name'];
+        $pathNames[] = $category['label'];
     }
 
     $subcategories = getCategories($pdo, $category['id']);
@@ -97,7 +97,7 @@ $app->get('/szukaj', function (Request $request, Response $response, $args) use 
     $hits = [];
     if ($q) {
         $stmt = $pdo->prepare("
-            SELECT i.*, c.slug as category_slug, p.slug as parent_slug
+            SELECT i.*, c.url_slug as category_slug, p.url_slug as parent_slug
             FROM image i
             JOIN category c ON i.category_id = c.id
             LEFT JOIN category p ON c.parent_id = p.id
@@ -218,7 +218,7 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
     $root = CONTENT_PATH . '/pieczatki';
     $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));
 
-    $insCategory = $pdo->prepare("INSERT INTO category(name, slug, parent_id) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)");
+    $insCategory = $pdo->prepare("INSERT INTO category(directory_name, url_slug, label, parent_id) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)");
     $insImage = $pdo->prepare("INSERT INTO image(category_id, filename, real_path, ext) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE id=id");
 
     $slugify = new Cocur\Slugify\Slugify();
@@ -236,7 +236,7 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
 
         $parentId = 1;
         foreach ($parts as $categoryName) {
-            $insCategory->execute([$categoryName, $categoryName, $parentId]);
+            $insCategory->execute([$categoryName, $slugify->slugify($categoryName), $categoryName, $parentId]);
             $parentId = (int)$pdo->lastInsertId();
         }
 

@@ -15,7 +15,7 @@ function getCategories(PDO $pdo, int $parentId = 1)
 {
     $sql = "
         WITH RECURSIVE roots AS (
-          SELECT id, name, slug
+          SELECT id, directory_name, url_slug, label
           FROM category
           WHERE parent_id = ?
         ),
@@ -32,13 +32,13 @@ function getCategories(PDO $pdo, int $parentId = 1)
           JOIN category c ON c.parent_id = s.cat_id
         )
         SELECT
-          r.id, r.name, r.slug,
+          r.id, r.directory_name, r.url_slug, r.label,
           COUNT(i.id) AS stamps_count
         FROM roots r
         LEFT JOIN subtree s ON s.root_id = r.id
         LEFT JOIN image i ON i.category_id = s.cat_id
-        GROUP BY r.id, r.name, r.slug
-        ORDER BY r.name;";
+        GROUP BY r.id, r.directory_name, r.url_slug, r.label
+        ORDER BY r.url_slug;";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$parentId]);
@@ -47,7 +47,7 @@ function getCategories(PDO $pdo, int $parentId = 1)
 
 function getCategoryBySlug(PDO $pdo, string $slug, int $parentId = 1)
 {
-    $sql = "SELECT * FROM category WHERE slug = ? AND parent_id = ?";
+    $sql = "SELECT * FROM category WHERE url_slug = ? AND parent_id = ?";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$slug, $parentId]);
@@ -63,12 +63,12 @@ function getImages(PDO $pdo, int $categoryId)
 
 function getAllCategories(PDO $pdo)
 {
-    return $pdo->query("SELECT * FROM category ORDER BY name")->fetchAll();
+    return $pdo->query("SELECT * FROM category ORDER BY label")->fetchAll();
 }
 
 function searchImagesAdmin(PDO $pdo, array $filters)
 {
-    $sql = "SELECT i.*, c.name as category_name 
+    $sql = "SELECT i.*, c.label as category_name 
             FROM image i 
             JOIN category c ON i.category_id = c.id 
             WHERE 1=1";

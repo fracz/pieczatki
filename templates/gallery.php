@@ -2,11 +2,11 @@
     <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 370px">
             <h3 class="display-5 text-white text-uppercase">KOLEKCJA PIECZĄTEK</h3>
-            <?php if ($subdir): ?>
+            <?php if ($suburl): ?>
                 <div class="d-inline-flex flex-wrap text-white">
                     <p class="m-0 text-uppercase"><a class="text-white" href="/">Kolekcja</a></p>
                     <?php
-                    $dirs = explode('/', $subdir);
+                    $dirs = explode('/', $suburl);
                     $names = $breadcrumbs;
                     $last = array_pop($names);
                     array_pop($dirs);

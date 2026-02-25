@@ -9,11 +9,11 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
     <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 370px">
             <h3 class="display-5 text-white text-uppercase">KOLEKCJA PIECZĄTEK</h3>
-            <?php if ($subdir): ?>
+            <?php if ($suburl): ?>
                 <div class="d-inline-flex flex-wrap text-white">
                     <p class="m-0 text-uppercase"><a class="text-white" href="/">Kolekcja</a></p>
                     <?php
-                    $dirs = explode('/', $subdir);
+                    $dirs = explode('/', $suburl);
                     $names = $breadcrumbs;
                     $last = array_pop($names);
                     array_pop($dirs);
@@ -68,10 +68,12 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
     <div class="container pt-5 pb-3">
         <div class="row">
             <?php if (isset($categories)): ?>
-                <?php foreach ($categories as $cat): ?>
+                <?php foreach ($categories as $cat):
+                    $coverUrl = ($subdir ? $subdir . '/' : '') . $cat['directory_name'] . '/cover.png';
+                    ?>
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="destination-item position-relative overflow-hidden mb-2"
-                             style="min-height: 200px; background-size: 100% 100%; background-image: url('/media/<?= $subdir ? $subdir . '/' : '' ?><?= $cat['directory_name'] ?>/cover.png')">
+                             style="min-height: 200px; background-size: 100% 100%; background-image: url('/media/<?= $coverUrl ?>')">
                             <a class="destination-overlay text-white text-decoration-none"
                                href="/pieczatki/<?= $subdir ? $subdir . '/' : '' ?><?= $cat['url_slug'] ?>">
                                 <h5 class="text-white"><?= $cat['label'] ?></h5>

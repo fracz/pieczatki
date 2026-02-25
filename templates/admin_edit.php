@@ -72,12 +72,39 @@
                         </thead>
                         <tbody>
                         <?php foreach ($images as $image): ?>
-                            <?php $fullFilename = $image['real_path']; ?>
+                            <?php
+                            $fullFilename = $image['real_path'];
+
+                            // Build category URL path
+                            $categoryUrlPath = '';
+                            $currentCat = null;
+                            foreach ($categories as $c) {
+                                if ($c['id'] == $image['category_id']) {
+                                    $currentCat = $c;
+                                    break;
+                                }
+                            }
+
+                            if ($currentCat) {
+                                $urlParts = [];
+                                $temp = $currentCat;
+                                while ($temp && $temp['url_slug'] !== 'root') {
+                                    array_unshift($urlParts, $temp['url_slug']);
+                                    $temp = $temp['parent_id'] ? ($categoryMap[$temp['parent_id']] ?? null) : null;
+                                }
+                                $categoryUrlPath = implode('/', $urlParts);
+                            }
+                            ?>
                             <tr>
                                 <td>
                                     <img src="/media/<?= $fullFilename ?>" class="img-fluid mb-2">
                                     <small class="d-block text-muted"><?= $image['filename'] ?></small>
                                     <small class="d-block font-weight-bold"><?= $image['category_name'] ?></small>
+                                    <a href="/pieczatki/<?= htmlentities($categoryUrlPath) ?>" target="_blank"
+                                       class="btn btn-sm btn-outline-primary mt-1">
+                                        <i class="fa fa-external-link"></i> Podgląd
+                                    </a>
+
                                 </td>
                                 <td>
                                     <input type="hidden" name="stamps[<?= $image['id'] ?>][id]"

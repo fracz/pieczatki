@@ -52,29 +52,16 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
 <div class="container-fluid py-5">
     <div class="container pt-5 pb-3">
         <div class="row">
-            <?php if (isset($regions)): ?>
-                <?php foreach ($regions as $region): ?>
+            <?php if (isset($categories)): ?>
+                <?php foreach ($categories as $cat): ?>
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="destination-item position-relative overflow-hidden mb-2" style="min-height: 200px">
-                            <img class="img-fluid" src="/media/<?= $region['slug'] ?>/cover.png" alt="">
+                            <img class="img-fluid"
+                                 src="/media/<?= $subdir ? $subdir . '/' : '' ?><?= $cat['slug'] ?>/cover.png" alt="">
                             <a class="destination-overlay text-white text-decoration-none"
-                               href="/pieczatki/<?= $region['slug'] ?>">
-                                <h5 class="text-white"><?= $region['name'] ?></h5>
-                                <span><?= $region['stamps_count'] ?> pieczątek</span>
-                            </a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php elseif (isset($counties)): ?>
-                <?php foreach ($counties as $county): ?>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="destination-item position-relative overflow-hidden mb-2" style="min-height: 200px">
-                            <img class="img-fluid" src="/media/<?= $region['slug'] ?>/<?= $county['slug'] ?>/cover.png"
-                                 alt="">
-                            <a class="destination-overlay text-white text-decoration-none"
-                               href="/pieczatki/<?= $region['slug'] ?>/<?= $county['slug'] ?>">
-                                <h5 class="text-white"><?= $county['name'] ?></h5>
-                                <span><?= $county['stamps_count'] ?> pieczątek</span>
+                               href="/pieczatki/<?= $subdir ? $subdir . '/' : '' ?><?= $cat['slug'] ?>">
+                                <h5 class="text-white"><?= $cat['name'] ?></h5>
+                                <span><?= $cat['stamps_count'] ?> pieczątek</span>
                             </a>
                         </div>
                     </div>

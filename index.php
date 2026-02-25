@@ -29,7 +29,7 @@ $return404 = function (Response $response) use ($phpView) {
 
 $app->get('/', function (Request $request, Response $response, $args) use ($phpView, $pdo) {
     return $phpView->render($response, "home.php", [
-        'regions' => getRegions($pdo),
+        'categories' => getCategories($pdo),
         'totalCount' => getTotalStampsCount($pdo)
     ]);
 });
@@ -55,39 +55,39 @@ $app->get('/logout', function (Request $request, Response $response, $args) use 
 
 $app->get('/pieczatki[/{path:.+}]', function (Request $request, Response $response, $args) use ($pdo, $return404, $phpView) {
     $path = $args['path'] ?? '';
-    $parts = explode('/', $path);
-
     if (!$path) {
         return $response->withStatus(301)->withHeader('Location', '/');
     }
 
-    $regionSlug = $parts[0];
-    $region = getRegionBySlug($pdo, $regionSlug);
-    if (!$region) {
-        return $return404($response);
+    $parts = explode('/', trim($path, '/'));
+    $currentParentId = 1;
+    $category = null;
+    $pathNames = [];
+
+    foreach ($parts as $slug) {
+        $category = getCategoryBySlug($pdo, $slug, $currentParentId);
+        if (!$category) {
+            return $return404($response);
+        }
+        $currentParentId = $category['id'];
+        $pathNames[] = $category['name'];
     }
 
-    if (count($parts) === 1) {
-        // List counties in region
+    $subcategories = getCategories($pdo, $category['id']);
+    $images = getImages($pdo, $category['id']);
+
+    if (count($subcategories) > 0 && count($images) == 0) {
         return $phpView->render($response, "home.php", [
-            'region' => $region,
-            'counties' => getCounties($pdo, $region['id']),
-            'subdir' => $region['name']
+            'category' => $category,
+            'categories' => $subcategories,
+            'subdir' => implode('/', $pathNames)
         ]);
     }
 
-    $countySlug = $parts[1];
-    $county = getCountyBySlug($pdo, $region['id'], $countySlug);
-    if (!$county) {
-        return $return404($response);
-    }
-
-    // List images in county
     return $phpView->render($response, "gallery.php", [
-        'region' => $region,
-        'county' => $county,
-        'images' => getImages($pdo, $county['id']),
-        'subdir' => $region['name'] . '/' . $county['name']
+        'category' => $category,
+        'images' => $images,
+        'subdir' => implode('/', $pathNames)
     ]);
 });
 
@@ -97,10 +97,10 @@ $app->get('/szukaj', function (Request $request, Response $response, $args) use 
     $hits = [];
     if ($q) {
         $stmt = $pdo->prepare("
-            SELECT i.*, r.slug as region_slug, c.slug as county_slug
+            SELECT i.*, c.slug as category_slug, p.slug as parent_slug
             FROM image i
-            JOIN county c ON i.county_id = c.id
-            JOIN region r ON c.region_id = r.id
+            JOIN category c ON i.category_id = c.id
+            LEFT JOIN category p ON c.parent_id = p.id
             WHERE i.location LIKE ? OR i.description LIKE ? OR i.filename LIKE ?
             LIMIT 100
         ");
@@ -169,8 +169,7 @@ $app->get('/admin/edit', function (Request $request, Response $response, $args) 
     }
     $filters = $request->getQueryParams();
     return $phpView->render($response, "admin_edit.php", [
-        'regions' => getAllRegions($pdo),
-        'counties' => getAllCounties($pdo),
+        'categories' => getAllCategories($pdo),
         'images' => searchImagesAdmin($pdo, $filters),
         'filters' => $filters
     ]);
@@ -219,9 +218,8 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
     $root = CONTENT_PATH . '/pieczatki';
     $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));
 
-    $insVoiv = $pdo->prepare("INSERT INTO region(name, slug) VALUES(?, ?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)");
-    $insCounty = $pdo->prepare("INSERT INTO county(region_id, name, slug) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)");
-    $insImage = $pdo->prepare("INSERT INTO image(county_id, filename, real_path, ext) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE id=id");
+    $insCategory = $pdo->prepare("INSERT INTO category(name, slug, parent_id) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)");
+    $insImage = $pdo->prepare("INSERT INTO image(category_id, filename, real_path, ext) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE id=id");
 
     $slugify = new Cocur\Slugify\Slugify();
     $imported = 0;
@@ -234,19 +232,18 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
         }
         $relPath = trim(str_replace($root, '', $file->getPathname()), '/');
         $parts = explode('/', dirname($relPath));
-        if (count($parts) < 2) continue;
+        if ($parts[0] === '.') array_shift($parts);
 
-        $voivName = $parts[0];
-        $countyName = $parts[1];
+        $parentId = 1;
+        foreach ($parts as $categoryName) {
+            $insCategory->execute([$categoryName, $categoryName, $parentId]);
+            $parentId = (int)$pdo->lastInsertId();
+        }
 
-        $insVoiv->execute([$voivName, $slugify->slugify($voivName)]);
-        $voivId = (int)$pdo->lastInsertId();
-
-        $insCounty->execute([$voivId, $countyName, $slugify->slugify($countyName)]);
-        $countyId = (int)$pdo->lastInsertId();
+        if ($parentId === 1) continue; // Image must be in a category
 
         $ext = strtolower($file->getExtension());
-        $insImage->execute([$countyId, $file->getFilename(), $relPath, $ext]);
+        $insImage->execute([$parentId, $file->getFilename(), $relPath, $ext]);
         if ($insImage->rowCount() > 0) {
             $imported++;
         }

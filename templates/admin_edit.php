@@ -10,27 +10,14 @@
     <div class="container">
         <form method="get" action="/admin/edit" class="bg-light p-4 shadow mb-5">
             <div class="row">
-                <div class="col-md-3 mb-3">
-                    <label>Województwo</label>
-                    <select name="region_id" class="form-control" onchange="this.form.submit()">
+                <div class="col-md-6 mb-3">
+                    <label>Grupa</label>
+                    <select name="category_id" class="form-control" onchange="this.form.submit()">
                         <option value="">Wszystkie</option>
-                        <?php foreach ($regions as $r): ?>
-                            <option value="<?= $r['id'] ?>" <?= ($filters['region_id'] ?? '') == $r['id'] ? 'selected' : '' ?>>
-                                <?= $r['name'] ?>
+                        <?php foreach ($categories as $c): ?>
+                            <option value="<?= $c['id'] ?>" <?= ($filters['category_id'] ?? '') == $c['id'] ? 'selected' : '' ?>>
+                                <?= $c['name'] ?>
                             </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Powiat</label>
-                    <select name="county_id" class="form-control" onchange="this.form.submit()">
-                        <option value="">Wszystkie</option>
-                        <?php foreach ($counties as $c): ?>
-                            <?php if (!$filters['region_id'] || $c['region_id'] == $filters['region_id']): ?>
-                                <option value="<?= $c['id'] ?>" <?= ($filters['county_id'] ?? '') == $c['id'] ? 'selected' : '' ?>>
-                                    <?= $c['name'] ?>
-                                </option>
-                            <?php endif; ?>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -57,13 +44,12 @@
                         </thead>
                         <tbody>
                         <?php foreach ($images as $image): ?>
-                            <?php $fullFilename = $image['region_slug'] . '/' . $image['county_slug'] . '/' . $image['filename']; ?>
+                            <?php $fullFilename = $image['real_path']; ?>
                             <tr>
                                 <td>
                                     <img src="/media/<?= $fullFilename ?>" class="img-fluid mb-2">
                                     <small class="d-block text-muted"><?= $image['filename'] ?></small>
-                                    <small class="d-block font-weight-bold"><?= $image['region_name'] ?>
-                                        / <?= $image['county_name'] ?></small>
+                                    <small class="d-block font-weight-bold"><?= $image['category_name'] ?></small>
                                 </td>
                                 <td>
                                     <input type="hidden" name="stamps[<?= $image['id'] ?>][id]"

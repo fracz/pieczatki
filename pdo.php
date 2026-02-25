@@ -11,79 +11,72 @@ $pdo = new PDO(
     ]
 );
 
-function getRegions(PDO $pdo)
+function getCategories(PDO $pdo, int $parentId = 1)
 {
-    return $pdo->query("
-        SELECT r.id, r.name, r.slug, COUNT(i.id) as stamps_count
-        FROM region r
-        LEFT JOIN county c ON r.id = c.region_id
-        LEFT JOIN image i ON c.id = i.county_id
-        GROUP BY r.id
-        ORDER BY r.name
-    ")->fetchAll();
-}
+    $sql = "
+        WITH RECURSIVE roots AS (
+          SELECT id, name, slug
+          FROM category
+          WHERE parent_id = ?
+        ),
+        subtree AS (
+          -- start: każdy root jest swoim własnym potomkiem
+          SELECT r.id AS root_id, r.id AS cat_id
+          FROM roots r
+        
+          UNION ALL
+        
+          -- rekurencja: schodzimy w dół drzewa
+          SELECT s.root_id, c.id AS cat_id
+          FROM subtree s
+          JOIN category c ON c.parent_id = s.cat_id
+        )
+        SELECT
+          r.id, r.name, r.slug,
+          COUNT(i.id) AS stamps_count
+        FROM roots r
+        LEFT JOIN subtree s ON s.root_id = r.id
+        LEFT JOIN image i ON i.category_id = s.cat_id
+        GROUP BY r.id, r.name, r.slug
+        ORDER BY r.name;";
 
-function getRegionBySlug(PDO $pdo, string $slug)
-{
-    $stmt = $pdo->prepare("SELECT * FROM region WHERE slug = ?");
-    $stmt->execute([$slug]);
-    return $stmt->fetch();
-}
-
-function getCounties(PDO $pdo, int $regionId)
-{
-    $stmt = $pdo->prepare("
-        SELECT c.id, c.name, c.slug, COUNT(i.id) as stamps_count
-        FROM county c
-        LEFT JOIN image i ON c.id = i.county_id
-        WHERE c.region_id = ?
-        GROUP BY c.id
-        ORDER BY c.name
-    ");
-    $stmt->execute([$regionId]);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$parentId]);
     return $stmt->fetchAll();
 }
 
-function getCountyBySlug(PDO $pdo, int $regionId, string $slug)
+function getCategoryBySlug(PDO $pdo, string $slug, int $parentId = 1)
 {
-    $stmt = $pdo->prepare("SELECT * FROM county WHERE region_id = ? AND slug = ?");
-    $stmt->execute([$regionId, $slug]);
+    $sql = "SELECT * FROM category WHERE slug = ? AND parent_id = ?";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$slug, $parentId]);
     return $stmt->fetch();
 }
 
-function getImages(PDO $pdo, int $countyId)
+function getImages(PDO $pdo, int $categoryId)
 {
-    $stmt = $pdo->prepare("SELECT * FROM image WHERE county_id = ? ORDER BY filename");
-    $stmt->execute([$countyId]);
+    $stmt = $pdo->prepare("SELECT * FROM image WHERE category_id = ? ORDER BY filename");
+    $stmt->execute([$categoryId]);
     return $stmt->fetchAll();
 }
 
-function getAllRegions(PDO $pdo)
+function getAllCategories(PDO $pdo)
 {
-    return $pdo->query("SELECT * FROM region ORDER BY name")->fetchAll();
-}
-
-function getAllCounties(PDO $pdo)
-{
-    return $pdo->query("SELECT * FROM county ORDER BY name")->fetchAll();
+    return $pdo->query("SELECT * FROM category ORDER BY name")->fetchAll();
 }
 
 function searchImagesAdmin(PDO $pdo, array $filters)
 {
-    $sql = "SELECT i.*, r.slug as region_slug, c.slug as county_slug, r.name as region_name, c.name as county_name 
+    $sql = "SELECT i.*, c.name as category_name 
             FROM image i 
-            JOIN county c ON i.county_id = c.id 
-            JOIN region r ON c.region_id = r.id 
+            JOIN category c ON i.category_id = c.id 
             WHERE 1=1";
     $params = [];
 
-    if (!empty($filters['region_id'])) {
-        $sql .= " AND r.id = ?";
-        $params[] = $filters['region_id'];
-    }
-    if (!empty($filters['county_id'])) {
+    if (!empty($filters['category_id'])) {
         $sql .= " AND c.id = ?";
-        $params[] = $filters['county_id'];
+        $params[] = $filters['category_id'];
     }
     if (!empty($filters['q'])) {
         $sql .= " AND (i.location LIKE ? OR i.description LIKE ? OR i.filename LIKE ? OR i.gccode LIKE ?)";

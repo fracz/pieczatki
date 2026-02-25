@@ -48,7 +48,8 @@
                 <?php endif; ?>
                 <div class="row">
                     <?php foreach ($hits as $hit):
-                        $filepath = $hit['region_slug'] . '/' . $hit['county_slug'] . '/' . $hit['filename'];
+                        $filepath = $hit['real_path'];
+                        $linkPath = dirname($filepath);
                         ?>
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="package-item bg-white mb-2">
@@ -83,10 +84,10 @@
                                     </div>
                                     <p class="h5" href=""><?= $hit['description'] ?? '' ?></p>
                                     <div class="border-top mt-4 pt-4">
-                                        <h6 class="m-0">
+                                        <h6 class="m-0 text-truncate">
                                             <i class="fa fa-link text-primary mr-2"></i>
-                                            <a href="/pieczatki/<?= $hit['region_slug'] ?>/<?= $hit['county_slug'] ?>#<?= $hit['filename'] ?>">
-                                                <?= $hit['region_slug'] ?> / <?= $hit['county_slug'] ?>
+                                            <a href="/pieczatki/<?= $linkPath ?>#<?= $hit['filename'] ?>">
+                                                <?= $linkPath ?>
                                             </a>
                                         </h6>
                                     </div>

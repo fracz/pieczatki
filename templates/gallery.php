@@ -8,15 +8,15 @@
                     <?php
                     $dirs = explode('/', $subdir);
                     $last = array_pop($dirs);
-                    ?>
-                    <?php
-                    if ($dirs):
+                    $currentPath = '';
+                    foreach ($dirs as $dir):
+                        $currentPath .= ($currentPath ? '/' : '') . $dir;
                         ?>
                         <i class="fa fa-angle-double-right pt-1 px-3"></i>
                         <p class="m-0 text-uppercase">
-                            <a class="text-white" href="/pieczatki/<?= $dirs[0] ?>"><?= $dirs[0] ?></a>
+                            <a class="text-white" href="/pieczatki/<?= $currentPath ?>"><?= $dir ?></a>
                         </p>
-                    <?php endif; ?>
+                    <?php endforeach; ?>
                     <i class="fa fa-angle-double-right pt-1 px-3"></i>
                     <p class="m-0 text-uppercase"><?= $last ?></p>
                 </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="row">
             <?php foreach ($images as $image):
-                $fullFilename = $region['slug'] . '/' . $county['slug'] . '/' . $image['filename'];
+                $fullFilename = $image['real_path'];
                 ?>
                 <div class="col-lg-4 col-md-6 mb-4" id="<?= $image['filename'] ?>">
                     <div class="package-item bg-white mb-2">

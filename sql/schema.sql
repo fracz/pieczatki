@@ -1,32 +1,24 @@
-CREATE TABLE `region`
+CREATE TABLE `category`
 (
-    `id`   int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `name` varchar(128)     NOT NULL,
-    `slug` varchar(128)     NOT NULL,
+    `id`        int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `parent_id` int(10) unsigned DEFAULT NULL,
+    `name`      varchar(128)     NOT NULL,
+    `slug`      varchar(128)     NOT NULL,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `uq_voivodeship_slug` (`slug`)
+    UNIQUE KEY `uq_category_parent_slug` (`parent_id`, `slug`),
+    KEY `idx_category_parent` (`parent_id`),
+    CONSTRAINT `fk_category_parent` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_polish_ci;
 
-CREATE TABLE `county`
-(
-    `id`        int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `region_id` int(10) unsigned NOT NULL,
-    `name`      varchar(128)     NOT NULL,
-    `slug`      varchar(128)     NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uq_county_region_slug` (`region_id`, `slug`),
-    KEY `idx_county_region` (`region_id`),
-    CONSTRAINT `fk_county_region` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_polish_ci;
+INSERT INTO `category` (id, name, slug)
+VALUES (1, 'root', 'root');
 
 CREATE TABLE `image`
 (
     `id`          int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `county_id`   int(10) unsigned NOT NULL,
+    `category_id` int(10) unsigned NOT NULL,
     `filename`    varchar(255)     NOT NULL,
     `real_path`   varchar(512)     NOT NULL,
     `ext`         varchar(8)       NOT NULL,
@@ -39,9 +31,9 @@ CREATE TABLE `image`
     `updated_at`  timestamp        NULL     DEFAULT NULL ON UPDATE current_timestamp(),
     PRIMARY KEY (`id`),
     UNIQUE KEY `uq_image_real_path` (`real_path`),
-    KEY `idx_image_county` (`county_id`),
+    KEY `idx_image_category` (`category_id`),
     KEY `idx_image_ext` (`ext`),
-    CONSTRAINT `fk_image_county` FOREIGN KEY (`county_id`) REFERENCES `county` (`id`) ON DELETE CASCADE
+    CONSTRAINT `fk_image_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_polish_ci;

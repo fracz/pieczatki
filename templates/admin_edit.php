@@ -14,9 +14,37 @@
                     <label>Grupa</label>
                     <select name="category_id" class="form-control" onchange="this.form.submit()">
                         <option value="">Wszystkie</option>
-                        <?php foreach ($categories as $c): ?>
+                        <?php
+                        // Build category paths
+                        $categoryMap = [];
+                        foreach ($categories as $c) {
+                            $categoryMap[$c['id']] = $c;
+                        }
+
+                        function getCategoryPath($categoryId, $categoryMap)
+                        {
+                            $path = [];
+                            $current = $categoryMap[$categoryId] ?? null;
+                            while ($current) {
+                                array_unshift($path, $current['name']);
+                                $current = $current['parent_id'] ? ($categoryMap[$current['parent_id']] ?? null) : null;
+                            }
+                            return str_replace('root / ', '', implode(' / ', $path));
+                        }
+
+                        // Sort categories by full path
+                        $collator = new Collator('pl_PL');
+                        usort($categories, function ($a, $b) use ($categoryMap, $collator) {
+                            $pathA = getCategoryPath($a['id'], $categoryMap);
+                            $pathB = getCategoryPath($b['id'], $categoryMap);
+                            return $collator->compare($pathA, $pathB);
+                        });
+
+                        foreach ($categories as $c):
+                            $fullPath = getCategoryPath($c['id'], $categoryMap);
+                            ?>
                             <option value="<?= $c['id'] ?>" <?= ($filters['category_id'] ?? '') == $c['id'] ? 'selected' : '' ?>>
-                                <?= $c['name'] ?>
+                                <?= htmlentities($fullPath) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>

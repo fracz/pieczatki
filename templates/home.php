@@ -75,7 +75,7 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                         <div class="destination-item position-relative overflow-hidden mb-2"
                              style="min-height: 200px; background-size: 100% 100%; background-image: url('/media/<?= $coverUrl ?>')">
                             <a class="destination-overlay text-white text-decoration-none"
-                               href="/pieczatki/<?= $subdir ? $subdir . '/' : '' ?><?= $cat['url_slug'] ?>">
+                               href="/pieczatki/<?= $suburl ? $suburl . '/' : '' ?><?= $cat['url_slug'] ?>">
                                 <h5 class="text-white"><?= $cat['label'] ?></h5>
                                 <span><?= $cat['stamps_count'] ?> pieczątek</span>
                             </a>

@@ -70,10 +70,8 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
             <?php if (isset($categories)): ?>
                 <?php foreach ($categories as $cat): ?>
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="destination-item position-relative overflow-hidden mb-2" style="min-height: 200px">
-                            <img class="img-fluid"
-                                 src="/media/<?= $subdir ? $subdir . '/' : '' ?><?= $cat['directory_name'] ?>/cover.png"
-                                 alt="">
+                        <div class="destination-item position-relative overflow-hidden mb-2"
+                             style="min-height: 200px; background-size: 100% 100%; background-image: url('/media/<?= $subdir ? $subdir . '/' : '' ?><?= $cat['directory_name'] ?>/cover.png')">
                             <a class="destination-overlay text-white text-decoration-none"
                                href="/pieczatki/<?= $subdir ? $subdir . '/' : '' ?><?= $cat['url_slug'] ?>">
                                 <h5 class="text-white"><?= $cat['label'] ?></h5>

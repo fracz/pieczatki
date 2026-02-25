@@ -38,6 +38,9 @@
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <?php if ($_SESSION['loggedIn'] ?? false): ?>
+                        <a class="text-primary px-3" href="/admin">
+                            admin
+                        </a>
                         <a class="text-primary px-3" href="/logout">
                             wyloguj
                         </a>

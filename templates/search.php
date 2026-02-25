@@ -47,45 +47,46 @@
                     </div>
                 <?php endif; ?>
                 <div class="row">
-                    <?php foreach ($hits as $filepath => $desc):
+                    <?php foreach ($hits as $hit):
+                        $filepath = $hit['region_slug'] . '/' . $hit['county_slug'] . '/' . $hit['filename'];
                         ?>
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="package-item bg-white mb-2">
                                 <img class="img-fluid" src="/media/<?= $filepath ?>" alt="">
                                 <div class="p-4">
                                     <div class="mb-3">
-                                        <?php if ($desc['location'] ?? ''): ?>
+                                        <?php if ($hit['location'] ?? ''): ?>
                                             <div>
-                                                <i class="fa fa-map-marker-alt text-primary mr-2 fa-fw"></i> <?= $desc['location'] ?>
+                                                <i class="fa fa-map-marker-alt text-primary mr-2 fa-fw"></i> <?= $hit['location'] ?>
                                             </div>
                                         <?php endif; ?>
-                                        <?php if ($desc['years'] ?? ''): ?>
+                                        <?php if ($hit['years'] ?? ''): ?>
                                             <div>
-                                                <i class="fa fa-calendar-alt text-primary mr-2 fa-fw"></i> <?= $desc['years'] ?>
+                                                <i class="fa fa-calendar-alt text-primary mr-2 fa-fw"></i> <?= $hit['years'] ?>
                                             </div>
                                         <?php endif; ?>
-                                        <?php if ($desc['dimensions'] ?? ''): ?>
+                                        <?php if ($hit['dimensions'] ?? ''): ?>
                                             <div>
-                                                <i class="fa fa-ruler text-primary mr-2 fa-fw"></i> <?= $desc['dimensions'] ?>
+                                                <i class="fa fa-ruler text-primary mr-2 fa-fw"></i> <?= $hit['dimensions'] ?>
                                             </div>
                                         <?php endif; ?>
 
-                                        <?php if ($desc['gccode'] ?? ''): ?>
+                                        <?php if ($hit['gccode'] ?? ''): ?>
                                             <div>
                                                 <i class="fa fa-box-open text-primary mr-2 fa-fw"></i>
-                                                <a href="https://coord.info/<?= $desc['gccode'] ?>" target="_blank"
+                                                <a href="https://coord.info/<?= $hit['gccode'] ?>" target="_blank"
                                                    class="text-monospace">
-                                                    <?= $desc['gccode'] ?>
+                                                    <?= $hit['gccode'] ?>
                                                 </a>
                                             </div>
                                         <?php endif; ?>
                                     </div>
-                                    <p class="h5" href=""><?= $desc['description'] ?? '' ?></p>
+                                    <p class="h5" href=""><?= $hit['description'] ?? '' ?></p>
                                     <div class="border-top mt-4 pt-4">
                                         <h6 class="m-0">
                                             <i class="fa fa-link text-primary mr-2"></i>
-                                            <a href="/pieczatki/<?= dirname($filepath) ?>#<?= basename($filepath) ?>">
-                                                <?= dirname($filepath) ?>
+                                            <a href="/pieczatki/<?= $hit['region_slug'] ?>/<?= $hit['county_slug'] ?>#<?= $hit['filename'] ?>">
+                                                <?= $hit['region_slug'] ?> / <?= $hit['county_slug'] ?>
                                             </a>
                                         </h6>
                                     </div>

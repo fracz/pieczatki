@@ -21,7 +21,7 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
                 </div>
                 <div class="text-white text-center">
                     Liczba pieczątek w kolekcji:
-                    <h4 style="color:yellow"><?= $stamps['count'] ?></h4>
+                    <h4 style="color:yellow"><?= $totalCount ?></h4>
                 </div>
             <?php endif; ?>
         </div>
@@ -52,44 +52,34 @@ $subdirHash = ($subdir ? '/' . $subdir : '');
 <div class="container-fluid py-5">
     <div class="container pt-5 pb-3">
         <div class="row">
-            <?php
-            $slugify = new Cocur\Slugify\Slugify();
-            $usort = fn($a, $b) => strcoll($slugify->slugify($a), $slugify->slugify($b));
-            $directories = array_keys($stamps);
-            usort($directories, $usort);
-            foreach ($directories as $directory):
-                if (in_array($directory, ['count', 'images'])) {
-                    continue;
-                }
-                ?>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2" style="min-height: 200px">
-                        <img class="img-fluid" src="/media<?= $subdirHash . '/' . $directory ?>/cover.png" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                           href="/pieczatki<?= $subdirHash ?>/<?= $directory ?>">
-                            <h5 class="text-white"><?= $directory ?></h5>
-                            <span>
-                                <?php
-                                $count = $stamps[$directory]['count'] ?? 0;
-                                if ($count) {
-                                    $r10 = $count % 10;
-                                    $r100 = $count % 100;
-                                    if ($count === 1) {
-                                        echo '1 pieczątka';
-                                    } else if ($r10 > 4 || $r10 < 2 || ($r100 < 15 && $r100 > 11)) {
-                                        echo $count . ' pieczątek';
-                                    } else {
-                                        echo $count . ' pieczątki';
-                                    }
-                                }
-                                ?>
-                            </span>
-                        </a>
+            <?php if (isset($regions)): ?>
+                <?php foreach ($regions as $region): ?>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="destination-item position-relative overflow-hidden mb-2" style="min-height: 200px">
+                            <img class="img-fluid" src="/media/<?= $region['slug'] ?>/cover.png" alt="">
+                            <a class="destination-overlay text-white text-decoration-none"
+                               href="/pieczatki/<?= $region['slug'] ?>">
+                                <h5 class="text-white"><?= $region['name'] ?></h5>
+                                <span><?= $region['stamps_count'] ?> pieczątek</span>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            <?php
-            endforeach;
-            ?>
+                <?php endforeach; ?>
+            <?php elseif (isset($counties)): ?>
+                <?php foreach ($counties as $county): ?>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="destination-item position-relative overflow-hidden mb-2" style="min-height: 200px">
+                            <img class="img-fluid" src="/media/<?= $region['slug'] ?>/<?= $county['slug'] ?>/cover.png"
+                                 alt="">
+                            <a class="destination-overlay text-white text-decoration-none"
+                               href="/pieczatki/<?= $region['slug'] ?>/<?= $county['slug'] ?>">
+                                <h5 class="text-white"><?= $county['name'] ?></h5>
+                                <span><?= $county['stamps_count'] ?> pieczątek</span>
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

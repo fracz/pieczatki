@@ -158,6 +158,87 @@ $app->put('/update', function (Request $request, Response $response, $args) use 
     }
 });
 
+$app->post('/admin/category/update', function (Request $request, Response $response, $args) use ($pdo) {
+    if (!($_SESSION['loggedIn'] ?? false)) {
+        return $response->withStatus(403);
+    }
+    $body = $request->getParsedBody();
+    $id = $body['id'] ?? null;
+    $label = $body['label'] ?? null;
+
+    if ($id && $label) {
+        $stmt = $pdo->prepare("UPDATE category SET label = ? WHERE id = ?");
+        $stmt->execute([$label, $id]);
+        return $response->withHeader('Location', '/admin/edit?category_id=' . $id)->withStatus(302);
+    }
+
+    return $response->withStatus(400);
+});
+
+$app->post('/admin/image/upload', function (Request $request, Response $response, $args) use ($pdo) {
+    if (!($_SESSION['loggedIn'] ?? false)) {
+        return $response->withStatus(403);
+    }
+
+    $uploadedFiles = $request->getUploadedFiles();
+    $uploadedFile = $uploadedFiles['image'] ?? null;
+    $body = $request->getParsedBody();
+
+    $categoryId = $body['category_id'] ?? null;
+    if (!$uploadedFile || $uploadedFile->getError() !== UPLOAD_ERR_OK || !$categoryId) {
+        return $response->withStatus(400);
+    }
+
+    // Get category path to determine where to save the file
+    $categories = getCategoriesTree($pdo, $categoryId);
+    $pathParts = array_map(function ($c) {
+        return $c['directory_name'];
+    }, $categories);
+
+    $subdir = implode('/', $pathParts);
+    $targetDir = CONTENT_PATH . '/pieczatki/' . $subdir;
+
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+
+    $filename = $uploadedFile->getClientFilename();
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    $targetPath = $targetDir . '/' . $filename;
+
+    // Handle name collisions
+    $i = 1;
+    while (file_exists($targetPath)) {
+        $name = pathinfo($filename, PATHINFO_FILENAME);
+        $newFilename = $name . '_' . $i . '.' . $ext;
+        $targetPath = $targetDir . '/' . $newFilename;
+        $i++;
+    }
+    $finalFilename = basename($targetPath);
+
+    $uploadedFile->moveTo($targetPath);
+
+    $realPath = ($subdir ? $subdir . '/' : '') . $finalFilename;
+
+    $stmt = $pdo->prepare("
+        INSERT INTO image (category_id, filename, real_path, ext, location, years, dimensions, description, gccode)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    $stmt->execute([
+        $categoryId,
+        $finalFilename,
+        $realPath,
+        strtolower($ext),
+        $body['location'] ?? null,
+        $body['years'] ?? null,
+        $body['dimensions'] ?? null,
+        $body['description'] ?? null,
+        $body['gccode'] ?? null
+    ]);
+
+    return $response->withHeader('Location', '/admin/edit?category_id=' . $categoryId)->withStatus(302);
+});
+
 $app->delete('/admin/image/{id}', function (Request $request, Response $response, $args) use ($pdo) {
     if (!($_SESSION['loggedIn'] ?? false)) {
         return $response->withStatus(403);

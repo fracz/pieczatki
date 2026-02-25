@@ -29,7 +29,7 @@
                                 array_unshift($path, $current['label']);
                                 $current = $current['parent_id'] ? ($categoryMap[$current['parent_id']] ?? null) : null;
                             }
-                            return str_replace('Kolekcja / ', '', implode(' / ', $path));
+                            return str_replace('root / ', '', implode(' / ', $path));
                         }
 
                         // Sort categories by full path
@@ -58,6 +58,65 @@
                 </div>
             </div>
         </form>
+
+        <?php if (!empty($filters['category_id'])):
+            $currentCategory = $categoryMap[$filters['category_id']] ?? null;
+            if ($currentCategory && $currentCategory['id'] != 1): ?>
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <form method="post" action="/admin/category/update" class="bg-light p-4 shadow">
+                            <h5>Edytuj nazwę kategorii</h5>
+                            <input type="hidden" name="id" value="<?= $currentCategory['id'] ?>">
+                            <div class="form-group">
+                                <label>Nazwa</label>
+                                <input type="text" name="label" class="form-control"
+                                       value="<?= htmlentities($currentCategory['label']) ?>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Zmień nazwę</button>
+                        </form>
+                    </div>
+                    <?php if ($images): ?>
+                        <div class="col-md-6">
+                            <form method="post" action="/admin/image/upload" enctype="multipart/form-data"
+                                  class="bg-light p-4 shadow">
+                                <h5>Dodaj nową pieczątkę</h5>
+                                <input type="hidden" name="category_id" value="<?= $currentCategory['id'] ?>">
+                                <div class="form-group">
+                                    <label>Plik obrazu</label>
+                                    <input type="file" name="image" class="form-control-file" accept="image/*" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Lokalizacja</label>
+                                        <input type="text" name="location" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Lata</label>
+                                        <input type="text" name="years" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Wymiary</label>
+                                        <input type="text" name="dimensions" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label>Kod GC</label>
+                                        <input type="text" name="gccode" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-md-8">
+                                        <label>Opis</label>
+                                        <textarea name="description" class="form-control form-control-sm"
+                                                  rows="1"></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Wgraj pieczątkę</button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
 
         <?php if ($images): ?>
             <div class="table-responsive bg-white shadow">

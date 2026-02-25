@@ -60,108 +60,104 @@
         </form>
 
         <?php if ($images): ?>
-            <form action="/admin/update-batch" method="post" id="batchEditForm">
-                <div class="table-responsive bg-white shadow">
-                    <table class="table table-bordered mb-0">
-                        <thead class="thead-light">
+            <div class="table-responsive bg-white shadow">
+                <table class="table table-bordered mb-0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th style="width: 150px">Podgląd</th>
+                        <th>Dane</th>
+                        <th style="width: 150px">Akcja</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($images as $image): ?>
+                        <?php
+                        $fullFilename = $image['real_path'];
+
+                        // Build category URL path
+                        $categoryUrlPath = '';
+                        $currentCat = null;
+                        foreach ($categories as $c) {
+                            if ($c['id'] == $image['category_id']) {
+                                $currentCat = $c;
+                                break;
+                            }
+                        }
+
+                        if ($currentCat) {
+                            $urlParts = [];
+                            $temp = $currentCat;
+                            while ($temp && $temp['url_slug'] !== 'root') {
+                                array_unshift($urlParts, $temp['url_slug']);
+                                $temp = $temp['parent_id'] ? ($categoryMap[$temp['parent_id']] ?? null) : null;
+                            }
+                            $categoryUrlPath = implode('/', $urlParts);
+                        }
+                        ?>
                         <tr>
-                            <th style="width: 150px">Podgląd</th>
-                            <th>Dane</th>
-                            <th style="width: 150px">Akcja</th>
+                            <td>
+                                <img src="/media/<?= $fullFilename ?>" class="img-fluid mb-2">
+                                <small class="d-block text-muted"><?= $image['filename'] ?></small>
+                                <small class="d-block font-weight-bold"><?= $image['category_name'] ?></small>
+                                <a href="/pieczatki/<?= htmlentities($categoryUrlPath) ?>" target="_blank"
+                                   class="btn btn-sm btn-outline-primary mt-1">
+                                    <i class="fa fa-external-link"></i> Podgląd
+                                </a>
+
+                            </td>
+                            <td>
+                                <input type="hidden" name="stamps[<?= $image['id'] ?>][id]"
+                                       value="<?= $image['id'] ?>">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label><small>Lokalizacja</small></label>
+                                        <input type="text" name="stamps[<?= $image['id'] ?>][location]"
+                                               class="form-control form-control-sm"
+                                               value="<?= htmlentities($image['location'] ?? '') ?>">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label><small>Lata</small></label>
+                                        <input type="text" name="stamps[<?= $image['id'] ?>][years]"
+                                               class="form-control form-control-sm"
+                                               value="<?= htmlentities($image['years'] ?? '') ?>">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label><small>Wymiary</small></label>
+                                        <input type="text" name="stamps[<?= $image['id'] ?>][dimensions]"
+                                               class="form-control form-control-sm"
+                                               value="<?= htmlentities($image['dimensions'] ?? '') ?>">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label><small>Kod GC</small></label>
+                                        <input type="text" name="stamps[<?= $image['id'] ?>][gccode]"
+                                               class="form-control form-control-sm"
+                                               value="<?= htmlentities($image['gccode'] ?? '') ?>">
+                                    </div>
+                                    <div class="form-group col-md-9">
+                                        <label><small>Opis</small></label>
+                                        <textarea name="stamps[<?= $image['id'] ?>][description]"
+                                                  class="form-control form-control-sm"
+                                                  rows="1"><?= htmlspecialchars($image['description'] ?? '') ?></textarea>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <button type="button" class="btn btn-success btn-sm btn-block mb-2"
+                                        onclick="saveSingle(<?= $image['id'] ?>, this)">Zapisz
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-sm btn-block mb-2"
+                                        onclick="deleteSingle(<?= $image['id'] ?>, this)">Usuń
+                                </button>
+                                <div class="status-indicator" id="status-<?= $image['id'] ?>"></div>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($images as $image): ?>
-                            <?php
-                            $fullFilename = $image['real_path'];
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
 
-                            // Build category URL path
-                            $categoryUrlPath = '';
-                            $currentCat = null;
-                            foreach ($categories as $c) {
-                                if ($c['id'] == $image['category_id']) {
-                                    $currentCat = $c;
-                                    break;
-                                }
-                            }
-
-                            if ($currentCat) {
-                                $urlParts = [];
-                                $temp = $currentCat;
-                                while ($temp && $temp['url_slug'] !== 'root') {
-                                    array_unshift($urlParts, $temp['url_slug']);
-                                    $temp = $temp['parent_id'] ? ($categoryMap[$temp['parent_id']] ?? null) : null;
-                                }
-                                $categoryUrlPath = implode('/', $urlParts);
-                            }
-                            ?>
-                            <tr>
-                                <td>
-                                    <img src="/media/<?= $fullFilename ?>" class="img-fluid mb-2">
-                                    <small class="d-block text-muted"><?= $image['filename'] ?></small>
-                                    <small class="d-block font-weight-bold"><?= $image['category_name'] ?></small>
-                                    <a href="/pieczatki/<?= htmlentities($categoryUrlPath) ?>" target="_blank"
-                                       class="btn btn-sm btn-outline-primary mt-1">
-                                        <i class="fa fa-external-link"></i> Podgląd
-                                    </a>
-
-                                </td>
-                                <td>
-                                    <input type="hidden" name="stamps[<?= $image['id'] ?>][id]"
-                                           value="<?= $image['id'] ?>">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label><small>Lokalizacja</small></label>
-                                            <input type="text" name="stamps[<?= $image['id'] ?>][location]"
-                                                   class="form-control form-control-sm"
-                                                   value="<?= htmlentities($image['location'] ?? '') ?>">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label><small>Lata</small></label>
-                                            <input type="text" name="stamps[<?= $image['id'] ?>][years]"
-                                                   class="form-control form-control-sm"
-                                                   value="<?= htmlentities($image['years'] ?? '') ?>">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label><small>Wymiary</small></label>
-                                            <input type="text" name="stamps[<?= $image['id'] ?>][dimensions]"
-                                                   class="form-control form-control-sm"
-                                                   value="<?= htmlentities($image['dimensions'] ?? '') ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <label><small>Kod GC</small></label>
-                                            <input type="text" name="stamps[<?= $image['id'] ?>][gccode]"
-                                                   class="form-control form-control-sm"
-                                                   value="<?= htmlentities($image['gccode'] ?? '') ?>">
-                                        </div>
-                                        <div class="form-group col-md-9">
-                                            <label><small>Opis</small></label>
-                                            <textarea name="stamps[<?= $image['id'] ?>][description]"
-                                                      class="form-control form-control-sm"
-                                                      rows="1"><?= htmlspecialchars($image['description'] ?? '') ?></textarea>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="align-middle">
-                                    <button type="button" class="btn btn-success btn-sm btn-block mb-2"
-                                            onclick="saveSingle(<?= $image['id'] ?>, this)">Zapisz
-                                    </button>
-                                    <button type="button" class="btn btn-outline-danger btn-sm btn-block mb-2"
-                                            onclick="deleteSingle(<?= $image['id'] ?>, this)">Usuń
-                                    </button>
-                                    <div class="status-indicator" id="status-<?= $image['id'] ?>"></div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-4 text-right">
-                    <button type="submit" class="btn btn-primary btn-lg px-5">Zapisz wszystkie widoczne</button>
-                </div>
-            </form>
         <?php else: ?>
             <div class="alert alert-info">Nie znaleziono pieczątek spełniających kryteria.</div>
         <?php endif; ?>

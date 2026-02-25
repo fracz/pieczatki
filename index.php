@@ -184,41 +184,6 @@ $app->get('/admin/edit', function (Request $request, Response $response, $args) 
     ]);
 });
 
-$app->post('/admin/update-batch', function (Request $request, Response $response, $args) use ($pdo) {
-    if (!($_SESSION['loggedIn'] ?? false)) {
-        return $response->withStatus(403);
-    }
-    $body = $request->getParsedBody();
-    $stamps = $body['stamps'] ?? [];
-
-    $pdo->beginTransaction();
-    try {
-        $stmt = $pdo->prepare("
-            UPDATE image 
-            SET location = ?, years = ?, dimensions = ?, description = ?, gccode = ?
-            WHERE id = ?
-        ");
-        foreach ($stamps as $stamp) {
-            $stmt->execute([
-                $stamp['location'] ?? null,
-                $stamp['years'] ?? null,
-                $stamp['dimensions'] ?? null,
-                $stamp['description'] ?? null,
-                $stamp['gccode'] ?? null,
-                $stamp['id']
-            ]);
-        }
-        $pdo->commit();
-    } catch (Exception $e) {
-        $pdo->rollBack();
-        throw $e;
-    }
-
-    $queryParams = $request->getQueryParams();
-    $url = '/admin/edit' . ($queryParams ? '?' . http_build_query($queryParams) : '');
-    return $response->withStatus(302)->withHeader('Location', $url);
-});
-
 $app->post('/admin/import', function (Request $request, Response $response, $args) use ($pdo) {
     if (!($_SESSION['loggedIn'] ?? false)) {
         return $response->withStatus(403);

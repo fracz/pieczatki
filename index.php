@@ -70,7 +70,7 @@ $app->get('/pieczatki[/{path:.+}]', function (Request $request, Response $respon
             return $return404($response);
         }
         $currentParentId = $category['id'];
-        $pathNames[] = $category['label'];
+        $pathNames[] = $category['url_slug'];
     }
 
     $subcategories = getCategories($pdo, $category['id']);

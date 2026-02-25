@@ -216,10 +216,14 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
     }
 
     $root = CONTENT_PATH . '/pieczatki';
+
+    $stmt = $pdo->query("SELECT real_path FROM image");
+    $existingPaths = array_flip($stmt->fetchAll(PDO::FETCH_COLUMN));
+
     $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));
 
     $insCategory = $pdo->prepare("INSERT INTO category(directory_name, url_slug, label, parent_id) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)");
-    $insImage = $pdo->prepare("INSERT INTO image(category_id, filename, real_path, ext) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE id=id");
+    $insImage = $pdo->prepare("INSERT INTO image(category_id, filename, real_path, ext) VALUES(?, ?, ?, ?)");
 
     $slugify = new Cocur\Slugify\Slugify();
     $imported = 0;
@@ -231,6 +235,11 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
             continue;
         }
         $relPath = trim(str_replace($root, '', $file->getPathname()), '/');
+
+        if (isset($existingPaths[$relPath])) {
+            continue;
+        }
+
         $parts = explode('/', dirname($relPath));
         if ($parts[0] === '.') array_shift($parts);
 
@@ -244,9 +253,7 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
 
         $ext = strtolower($file->getExtension());
         $insImage->execute([$parentId, $file->getFilename(), $relPath, $ext]);
-        if ($insImage->rowCount() > 0) {
-            $imported++;
-        }
+        $imported++;
     }
     $pdo->commit();
 

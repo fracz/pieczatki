@@ -7,6 +7,7 @@ CREATE TABLE `category`
     `label`          varchar(128)     NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uq_category_parent_slug` (`parent_id`, `url_slug`),
+    UNIQUE KEY `uq_category_parent_directory_name` (`parent_id`, `directory_name`),
     KEY `idx_category_parent` (`parent_id`),
     CONSTRAINT `fk_category_parent` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB

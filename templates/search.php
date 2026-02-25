@@ -49,7 +49,6 @@
                 <div class="row">
                     <?php foreach ($hits as $hit):
                         $filepath = $hit['real_path'];
-                        $linkPath = dirname($filepath);
                         ?>
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="package-item bg-white mb-2">
@@ -86,8 +85,8 @@
                                     <div class="border-top mt-4 pt-4">
                                         <h6 class="m-0 text-truncate">
                                             <i class="fa fa-link text-primary mr-2"></i>
-                                            <a href="/pieczatki/<?= $linkPath ?>#<?= $hit['filename'] ?>">
-                                                <?= $linkPath ?>
+                                            <a href="/pieczatki/<?= $hit['category_url'] ?>#<?= $hit['filename'] ?>">
+                                                <?= $hit['category_breadcrumb'] ?>
                                             </a>
                                         </h6>
                                     </div>

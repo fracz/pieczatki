@@ -116,6 +116,18 @@ $app->get('/szukaj', function (Request $request, Response $response, $args) use 
         $term = "%$q%";
         $stmt->execute([$term, $term, $term]);
         $hits = $stmt->fetchAll();
+        $hits = array_map(function ($hit) use ($pdo) {
+            $categories = getCategoriesTree($pdo, $hit['category_id']);
+            $url = array_map(function ($cat) {
+                return $cat['url_slug'];
+            }, $categories);
+            $labels = array_map(function ($cat) {
+                return $cat['label'];
+            }, $categories);
+            $hit['category_url'] = implode('/', $url);
+            $hit['category_breadcrumb'] = implode(' / ', $labels);
+            return $hit;
+        }, $hits);
     }
     return $phpView->render($response, "search.php", ['phrase' => $q, 'hits' => $hits]);
 });

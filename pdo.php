@@ -98,4 +98,29 @@ function getTotalStampsCount(PDO $pdo)
     return $pdo->query("SELECT COUNT(*) FROM image")->fetchColumn();
 }
 
+function getCategoriesTree(PDO $pdo, int $categoryId, string $prefix = ''): ?array
+{
+    $sql = "
+        WITH RECURSIVE chain AS (
+          SELECT id, parent_id, label, directory_name, url_slug, 0 AS lvl
+          FROM category
+          WHERE id = :id
+        
+          UNION ALL
+        
+          SELECT c.id, c.parent_id, c.label, c.directory_name, c.url_slug, chain.lvl + 1
+          FROM category c
+          JOIN chain ON c.id = chain.parent_id
+        )
+        SELECT *
+        FROM chain
+        WHERE id != 1
+        ORDER BY lvl DESC;
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':id' => $categoryId]);
+    return $stmt->fetchAll();
+}
+
 return $pdo;

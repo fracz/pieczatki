@@ -45,7 +45,7 @@ $app->get('/login', function (Request $request, Response $response, $args) use (
 
 $app->post('/login', function (Request $request, Response $response, $args) use ($phpView) {
     $body = $request->getParsedBody();
-    if ((sha1('yuve' . ($body['password'] ?? ''))) === '173511dfcbb4564c191d3c6f52ed1bb8ed1660db') {
+    if ((sha1('yuve' . ($body['password'] ?? ''))) === 'c93f1b18258b016e8a11f585556be57b86ef1e10') {
         $_SESSION['loggedIn'] = true;
         return $response->withStatus(301)->withHeader('Location', '/admin');
     } else {

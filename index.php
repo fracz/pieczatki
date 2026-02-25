@@ -228,7 +228,7 @@ $app->post('/admin/import', function (Request $request, Response $response, $arg
     $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));
 
     $insCategory = $pdo->prepare("INSERT INTO category(directory_name, url_slug, label, parent_id) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)");
-    $insImage = $pdo->prepare("INSERT INTO image(category_id, filename, real_path, ext) VALUES(?, ?, ?, ?)");
+    $insImage = $pdo->prepare("INSERT IGNORE INTO image(category_id, filename, real_path, ext) VALUES(?, ?, ?, ?)");
 
     $slugify = new Cocur\Slugify\Slugify();
     $imported = 0;

@@ -68,6 +68,7 @@ $app->get('/pieczatki[/{path:.+}]', function (Request $request, Response $respon
     $currentParentId = 1;
     $category = null;
     $pathNames = [];
+    $breadcrumbNames = [];
 
     foreach ($parts as $slug) {
         $category = getCategoryBySlug($pdo, $slug, $currentParentId);
@@ -76,6 +77,7 @@ $app->get('/pieczatki[/{path:.+}]', function (Request $request, Response $respon
         }
         $currentParentId = $category['id'];
         $pathNames[] = $category['url_slug'];
+        $breadcrumbNames[] = $category['label'];
     }
 
     $subcategories = getCategories($pdo, $category['id']);
@@ -85,14 +87,16 @@ $app->get('/pieczatki[/{path:.+}]', function (Request $request, Response $respon
         return $phpView->render($response, "home.php", [
             'category' => $category,
             'categories' => $subcategories,
-            'subdir' => implode('/', $pathNames)
+            'subdir' => implode('/', $pathNames),
+            'breadcrumbs' => $breadcrumbNames,
         ]);
     }
 
     return $phpView->render($response, "gallery.php", [
         'category' => $category,
         'images' => $images,
-        'subdir' => implode('/', $pathNames)
+        'subdir' => implode('/', $pathNames),
+        'breadcrumbs' => $breadcrumbNames,
     ]);
 });
 

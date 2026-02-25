@@ -7,17 +7,17 @@
                     <p class="m-0 text-uppercase"><a class="text-white" href="/">Kolekcja</a></p>
                     <?php
                     $dirs = explode('/', $subdir);
-                    $last = array_pop($dirs);
+                    $names = $breadcrumbs;
+                    $last = array_pop($names);
+                    array_pop($dirs);
+                    $names = array_combine($dirs, $names);
                     $currentPath = '';
-                    foreach ($dirs as $dir):
-                        $currentPath .= ($currentPath ? '/' : '') . $dir; // This is problematic if $subdir contains labels but needs slugs for URLs
-                        // Wait, $subdir in index.php is:
-                        // $pathNames[] = $category['label'];
-                        // $subdir = implode('/', $pathNames)
+                    foreach ($names as $dir => $label):
+                        $currentPath .= ($currentPath ? '/' : '') . $dir;
                         ?>
                         <i class="fa fa-angle-double-right pt-1 px-3"></i>
                         <p class="m-0 text-uppercase">
-                            <span class="text-white"><?= $dir ?></span>
+                            <a class="text-white" href="/pieczatki/<?= $currentPath ?>"><?= $label ?></a>
                         </p>
                     <?php endforeach; ?>
                     <i class="fa fa-angle-double-right pt-1 px-3"></i>
